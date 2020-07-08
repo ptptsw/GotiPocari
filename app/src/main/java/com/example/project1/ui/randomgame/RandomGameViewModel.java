@@ -1,16 +1,16 @@
-package com.example.project1.ui.notifications;
+package com.example.project1.ui.randomgame;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class NotificationsViewModel extends ViewModel {
+public class RandomGameViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
 
-    public NotificationsViewModel() {
+    public RandomGameViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is notifications fragment");
+        mText.setValue("This is Random Game fragment");
     }
 
     public LiveData<String> getText() {
