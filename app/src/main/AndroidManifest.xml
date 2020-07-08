@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.project1">
+    <uses-permission android:name="android.permission.READ_CONTACTS"/> //연락처 가져오는 권한 설정
+
 
     <application
         android:allowBackup="true"
