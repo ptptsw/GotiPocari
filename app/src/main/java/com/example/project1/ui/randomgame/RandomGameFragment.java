@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -23,13 +24,8 @@ public class RandomGameFragment extends Fragment {
         randomGameViewModel =
                 ViewModelProviders.of(this).get(RandomGameViewModel.class);
         View root = inflater.inflate(R.layout.fragment_randomgame, container, false);
-        final TextView textView = root.findViewById(R.id.text_randomgame);
-        randomGameViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
+        final ImageView imageView = root.findViewById(R.id.text_randomgame);
+//        final TextView textView = root.findViewById(R.id.text_randomgame);
         return root;
     }
 }
