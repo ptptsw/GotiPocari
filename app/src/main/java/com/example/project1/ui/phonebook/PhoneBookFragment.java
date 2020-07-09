@@ -19,7 +19,6 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.project1.R;
-import com.example.project1.ui.notifications.NotificationsViewModel;
 
 import org.json.JSONArray;
 import org.json.JSONException;
