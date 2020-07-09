@@ -22,4 +22,9 @@
         android:name="com.example.project1.ui.randomgame.RandomGameFragment"
         android:label="@string/title_randomgame"
         tools:layout="@layout/fragment_randomgame" />
+    <fragment
+        android:id="@+id/navigation_search"
+        android:name="com.example.project1.ui.search.SearchFragment"
+        android:label="SearchFragment"
+        tools:layout="@layout/fragment_search_main"/>
 </navigation>
