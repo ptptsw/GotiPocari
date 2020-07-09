@@ -1,6 +1,5 @@
 package com.example.project1.ui.randomgame;
 
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,8 +13,9 @@ import android.view.animation.RotateAnimation;
 import android.view.animation.AnticipateOvershootInterpolator;
 
 import java.util.Random;
-import java.io.InputStream;
-import java.io.IOException;
+import java.util.Map;
+import java.util.HashMap;
+import java.lang.reflect.Field;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -27,12 +27,12 @@ import com.example.project1.R;
 
 public class RandomGameFragment extends Fragment {
     private RandomGameViewModel randomGameViewModel;
-    private ImageView imageView;
+    private ImageView bottleImageView;
     private Button button;
     private Random rng = new Random();
     private float lastDegree;
     private String[] bottlePaths;
-
+    private Map<String, Integer> bottleMap;
     private RecyclerView recyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
@@ -53,10 +53,30 @@ public class RandomGameFragment extends Fragment {
         } catch (java.io.IOException e) {
             bottlePaths = new String[]{};
         }
-        mAdapter = new RGAdapter(bottlePaths);
-        recyclerView.setAdapter(mAdapter);
 
-        imageView = root.findViewById(R.id.text_randomgame);
+        bottleMap = new HashMap<String, Integer>();
+        for (Field f : com.example.project1.R.drawable.class.getFields()) {
+            try {
+                String fieldName = f.getName();
+                if (!fieldName.startsWith("bottle_"))
+                    continue;
+                int resourceId = getResources().getIdentifier(fieldName, "drawable", getActivity().getPackageName());
+                bottleMap.put(fieldName, resourceId);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        mAdapter = new RGAdapter(bottlePaths, new RGAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(ImageView imageView) {
+                String tag = (String) imageView.getTag();
+                String filename = tag.substring(0, tag.length() - 4);
+                bottleImageView.setImageResource(bottleMap.get(filename));
+            }
+        });
+        recyclerView.setAdapter(mAdapter);
+        bottleImageView = root.findViewById(R.id.text_randomgame);
         button = root.findViewById(R.id.spin_bottle);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
