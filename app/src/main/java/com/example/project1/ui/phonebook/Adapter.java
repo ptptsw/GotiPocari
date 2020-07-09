@@ -21,6 +21,10 @@ public class Adapter extends BaseAdapter {
     private TextView number;
     private TextView email;
 
+    public ArrayList<JsonData> getListViewItemList() {
+        return listViewItemList;
+    }
+
     private ArrayList<JsonData> listViewItemList = new ArrayList<JsonData>();
 
 
