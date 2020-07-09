@@ -26,45 +26,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.project1.R;
 
-class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
-    private String[] imageDataset;
-
-    public static class MyViewHolder extends RecyclerView.ViewHolder {
-        public ImageView imageView;
-        public MyViewHolder(ImageView v) {
-            super(v);
-            imageView = v;
-        }
-    }
-
-    public MyAdapter(String[] dataset) {
-        imageDataset = dataset;
-    }
-
-    @Override
-    public MyAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        ImageView v = (ImageView) LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item, parent, false);
-        MyViewHolder vh = new MyViewHolder(v);
-        return vh;
-    }
-
-    @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
-        InputStream inputStream;
-        String path = "bottles/" + imageDataset[position];
-        try {
-            inputStream = holder.imageView.getContext().getAssets().open(path);
-            Drawable drawable = Drawable.createFromStream(inputStream, null);
-            holder.imageView.setImageDrawable(drawable);
-        } catch (IOException e) {}
-    }
-
-    @Override
-    public int getItemCount() {
-        return imageDataset.length;
-    }
-}
-
 public class RandomGameFragment extends Fragment {
     private RandomGameViewModel randomGameViewModel;
     private ImageView imageView;
@@ -83,7 +44,7 @@ public class RandomGameFragment extends Fragment {
                 ViewModelProviders.of(this).get(RandomGameViewModel.class);
         View root = inflater.inflate(R.layout.fragment_randomgame, container, false);
 
-        recyclerView = root.findViewById(R.id.my_recycler_view);
+        recyclerView = root.findViewById(R.id.rg_recycler_view);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         recyclerView.setLayoutManager(layoutManager);
@@ -93,7 +54,7 @@ public class RandomGameFragment extends Fragment {
         } catch (java.io.IOException e) {
             bottlePaths = new String[]{};
         }
-        mAdapter = new MyAdapter(bottlePaths);
+        mAdapter = new RGAdapter(bottlePaths);
         recyclerView.setAdapter(mAdapter);
 
         imageView = root.findViewById(R.id.text_randomgame);
