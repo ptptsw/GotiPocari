@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Button;
 
-import android.view.animation.Interpolator;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.RotateAnimation;
@@ -80,21 +79,10 @@ public class RandomGameFragment extends Fragment {
                 rotate.setDuration((rng.nextInt(5) + 5) * 1000);
                 rotate.setFillAfter(true);
                 animSet.addAnimation(rotate);
-                imageView.startAnimation(animSet);
+                bottleImageView.startAnimation(animSet);
             }
         });
 
         return root;
-    }
-
-    private class SpinInterpolator implements Interpolator {
-        public SpinInterpolator() {}
-        public float getInterpolation(float t) {
-            return t * (1 - t);
-        }
-
-        public float pow(float base, int exponent) {
-            return exponent == 0 ? 1 : base * pow(base, exponent - 1);
-        }
     }
 }
