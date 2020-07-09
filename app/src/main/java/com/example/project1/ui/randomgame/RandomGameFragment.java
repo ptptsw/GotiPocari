@@ -1,42 +1,102 @@
 package com.example.project1.ui.randomgame;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AnticipateOvershootInterpolator;
 import android.widget.ImageView;
 import android.widget.Button;
 
-import android.view.animation.Animation;
 import android.view.animation.Interpolator;
+import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.RotateAnimation;
+import android.view.animation.AnticipateOvershootInterpolator;
+
 import java.util.Random;
+import java.io.InputStream;
+import java.io.IOException;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.project1.R;
+
+class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
+    private String[] imageDataset;
+
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
+        public ImageView imageView;
+        public MyViewHolder(ImageView v) {
+            super(v);
+            imageView = v;
+        }
+    }
+
+    public MyAdapter(String[] dataset) {
+        imageDataset = dataset;
+    }
+
+    @Override
+    public MyAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        ImageView v = (ImageView) LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item, parent, false);
+        MyViewHolder vh = new MyViewHolder(v);
+        return vh;
+    }
+
+    @Override
+    public void onBindViewHolder(MyViewHolder holder, int position) {
+        InputStream inputStream;
+        String path = "bottles/" + imageDataset[position];
+        try {
+            inputStream = holder.imageView.getContext().getAssets().open(path);
+            Drawable drawable = Drawable.createFromStream(inputStream, null);
+            holder.imageView.setImageDrawable(drawable);
+        } catch (IOException e) {}
+    }
+
+    @Override
+    public int getItemCount() {
+        return imageDataset.length;
+    }
+}
 
 public class RandomGameFragment extends Fragment {
     private RandomGameViewModel randomGameViewModel;
     private ImageView imageView;
     private Button button;
-    private Random rng;
+    private Random rng = new Random();
     private float lastDegree;
+    private String[] bottlePaths;
+
+    private RecyclerView recyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager layoutManager;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        rng = new Random();
         randomGameViewModel =
                 ViewModelProviders.of(this).get(RandomGameViewModel.class);
         View root = inflater.inflate(R.layout.fragment_randomgame, container, false);
-        imageView = root.findViewById(R.id.text_randomgame);
 
+        recyclerView = root.findViewById(R.id.my_recycler_view);
+        recyclerView.setHasFixedSize(true);
+        layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        recyclerView.setLayoutManager(layoutManager);
+
+        try {
+            bottlePaths = getActivity().getAssets().list("bottles");
+        } catch (java.io.IOException e) {
+            bottlePaths = new String[]{};
+        }
+        mAdapter = new MyAdapter(bottlePaths);
+        recyclerView.setAdapter(mAdapter);
+
+        imageView = root.findViewById(R.id.text_randomgame);
         button = root.findViewById(R.id.spin_bottle);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
