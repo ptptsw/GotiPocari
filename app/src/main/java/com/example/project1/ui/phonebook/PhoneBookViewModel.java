@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 public class PhoneBookViewModel extends ViewModel {
     private Adapter adapter;
-    private SampleData listview;
+    private JsonData listview;
 
     public Adapter getAdapter() {
         return adapter;
@@ -24,11 +24,11 @@ public class PhoneBookViewModel extends ViewModel {
         this.adapter = adapter;
     }
 
-    public SampleData getListview() {
+    public JsonData getListview() {
         return listview;
     }
 
-    public void setListview(SampleData listview) {
+    public void setListview(JsonData listview) {
         this.listview = listview;
     }
 

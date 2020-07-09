@@ -1,6 +1,8 @@
 package com.example.project1.ui.phonebook;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,20 +19,22 @@ public class Adapter extends BaseAdapter {
     private ImageView photo;
     private TextView name;
     private TextView number;
+    private TextView email;
 
-    private ArrayList<SampleData> listViewItemList = new ArrayList<SampleData>();
+    private ArrayList<JsonData> listViewItemList = new ArrayList<JsonData>();
 
 
 
-    public void addItem(String name, String number, int photo)
+    public void addItem(String name, String number, String email, int photo)
     {
-        SampleData item = new SampleData();
+        JsonData data = new JsonData();
 
-        item.setName(name);
-        item.setNumber(number);
-        item.setPhoto(photo);
+        data.setName(name);
+        data.setNumber(number);
+        data.setEmail(email);
+        data.setPhoto(photo);
 
-        listViewItemList.add(item);
+        listViewItemList.add(data);
     }
     @Override
     public int getCount() {
@@ -43,10 +47,11 @@ public class Adapter extends BaseAdapter {
     }
 
     @Override
-    public SampleData getItem(int position) {
+    public JsonData getItem(int position) {
         return listViewItemList.get(position);
     }
 
+    @SuppressLint("ResourceType")
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         final int pos = position;
@@ -61,12 +66,14 @@ public class Adapter extends BaseAdapter {
 
         name = (TextView) convertView.findViewById(R.id.name);
         number  = (TextView) convertView.findViewById(R.id.number);
+        email  = (TextView) convertView.findViewById(R.id.email);
         photo = (ImageView) convertView.findViewById(R.id.photo);
 
-        SampleData listViewItem = listViewItemList.get(position);
+        JsonData listViewItem = listViewItemList.get(position);
 
         name.setText(listViewItem.getName());
         number.setText(listViewItem.getNumber());
+        email.setText(listViewItem.getEmail());
         photo.setImageResource(listViewItem.getPhoto());
 
         return convertView;
