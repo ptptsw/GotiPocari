@@ -2,5 +2,6 @@
     <string name="app_name">Project1</string>
     <string name="title_phonebook">PhoneBook</string>
     <string name="title_dashboard">Pictures</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_randomgame">Random Game</string>
+    <string name="randgame_button_text">Spin!</string>
 </resources>
