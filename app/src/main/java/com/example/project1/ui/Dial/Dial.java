@@ -39,6 +39,30 @@ public class Dial extends Fragment implements  View.OnClickListener{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 // Inflate the layout for this fragment
+        if (ContextCompat.checkSelfPermission(getActivity(),
+                Manifest.permission.CALL_PHONE)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(),
+                    Manifest.permission.CALL_PHONE)) {
+
+                // Show an expanation to the user *asynchronously* -- don't block
+                // this thread waiting for the user's response! After the user
+                // sees the explanation, try again to request the permission.
+
+            } else {
+
+                // No explanation needed, we can request the permission.
+                ActivityCompat.requestPermissions(getActivity(),
+                        new String[]{Manifest.permission.CALL_PHONE}, 1000);
+
+
+                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+                // app-defined int constant. The callback method gets the
+                // result of the request.
+            }
+        }
         View view = inflater.inflate(R.layout.fragment_dial, container, false);
         b1=(Button)view.findViewById(R.id.b1);
         b2=(Button)view.findViewById(R.id.b2);
@@ -111,30 +135,7 @@ public class Dial extends Fragment implements  View.OnClickListener{
                 break;
 
             case R.id.bcall:
-                if (ContextCompat.checkSelfPermission(getActivity(),
-                        Manifest.permission.CALL_PHONE)
-                        != PackageManager.PERMISSION_GRANTED) {
 
-                    // Should we show an explanation?
-                    if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(),
-                            Manifest.permission.CALL_PHONE)) {
-
-                        // Show an expanation to the user *asynchronously* -- don't block
-                        // this thread waiting for the user's response! After the user
-                        // sees the explanation, try again to request the permission.
-
-                    } else {
-
-                        // No explanation needed, we can request the permission.
-                        ActivityCompat.requestPermissions(getActivity(),
-                                new String[]{Manifest.permission.CALL_PHONE}, 1000);
-
-
-                        // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
-                        // app-defined int constant. The callback method gets the
-                        // result of the request.
-                    }
-                }
                 Intent call = new Intent(Intent.ACTION_CALL, Uri.parse("tel:"+count));
                 startActivity(call);
                 break;
