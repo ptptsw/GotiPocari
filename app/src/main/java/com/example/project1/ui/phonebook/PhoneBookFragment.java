@@ -67,7 +67,14 @@ public class PhoneBookFragment extends Fragment {
         }catch (JSONException e) {
            // System.out.println("fqwefffffffffffffffffffffffffffffffffffffffffffffffffff");
             e.printStackTrace();
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        switch (requestCode) {
+            case PERMISSIONS_REQUEST_READ_CONTACTS:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
+                    getContactList();
         }
+    }
 
     private void requestContactList() {
         if (ActivityCompat.checkSelfPermission(getContext(), android.Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED)
