@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_phonebook">
+    app:startDestination="@id/navigation_dial">
 
     <fragment
         android:id="@+id/navigation_phonebook"
@@ -23,8 +23,8 @@
         android:label="@string/title_randomgame"
         tools:layout="@layout/fragment_randomgame" />
     <fragment
-        android:id="@+id/navigation_search"
-        android:name="com.example.project1.ui.search.SearchFragment"
-        android:label="SearchFragment"
-        tools:layout="@layout/fragment_search_main"/>
+        android:id="@+id/navigation_dial"
+        android:name="com.example.project1.ui.Dial.Dial"
+        android:label="@string/title_dial"
+        tools:layout="@layout/fragment_dial" />
 </navigation>

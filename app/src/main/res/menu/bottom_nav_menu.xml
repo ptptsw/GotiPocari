@@ -3,9 +3,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/app_bar_search"
-        android:icon="@drawable/ic_search_black_24dp"
-        android:title="Search" />
+        android:id="@+id/navigation_dial"
+        android:icon="@android:drawable/ic_menu_call"
+        android:title="@string/title_dial" />
     <item
         android:id="@+id/navigation_phonebook"
         android:icon="@drawable/ic_phonebook"
@@ -22,3 +22,4 @@
         android:title="@string/title_randomgame" />
 
 </menu>
+
