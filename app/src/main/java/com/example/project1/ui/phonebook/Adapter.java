@@ -3,6 +3,7 @@ package com.example.project1.ui.phonebook;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,16 +21,27 @@ public class Adapter extends BaseAdapter {
     private TextView name;
     private TextView number;
     private TextView email;
+    private ArrayList<JsonData> listViewItemList;
+    private Context context;
+    private LayoutInflater layoutInflater;
+
+
+    public Adapter() {
+        listViewItemList = new ArrayList<JsonData>();
+    }
+
+    public Adapter(ArrayList<JsonData> itemList, Context context) {
+        super();
+        this.listViewItemList = itemList == null ? new ArrayList<JsonData>() : itemList;
+        this.context = context;
+        this.layoutInflater = LayoutInflater.from(context);
+    }
 
     public ArrayList<JsonData> getListViewItemList() {
         return listViewItemList;
     }
 
-    private ArrayList<JsonData> listViewItemList = new ArrayList<JsonData>();
-
-
-
-    public void addItem(String name, String number, String email, int photo)
+    public void addItem(String name, String number, String email, Uri photo)
     {
         JsonData data = new JsonData();
 
@@ -40,6 +52,7 @@ public class Adapter extends BaseAdapter {
 
         listViewItemList.add(data);
     }
+
     @Override
     public int getCount() {
         return listViewItemList.size();
@@ -58,27 +71,26 @@ public class Adapter extends BaseAdapter {
     @SuppressLint("ResourceType")
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        final int pos = position;
         final Context context = parent.getContext();
 
+        convertView = layoutInflater.inflate(R.layout.fragment_phonebook_listview, parent, false);
+//        if (convertView == null)
+//        {
+//            LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//            convertView = inflater.inflate(R.layout.fragment_phonebook_listview,parent,false);
+//        }
 
-        if (convertView == null)
-        {
-            LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.fragment_phonebook_listview,parent,false);
-        }
-
-        name = (TextView) convertView.findViewById(R.id.name);
-        number  = (TextView) convertView.findViewById(R.id.number);
-        email  = (TextView) convertView.findViewById(R.id.email);
-        photo = (ImageView) convertView.findViewById(R.id.photo);
+        name = convertView.findViewById(R.id.name);
+        number = convertView.findViewById(R.id.number);
+        email = convertView.findViewById(R.id.email);
+        photo = convertView.findViewById(R.id.photo);
 
         JsonData listViewItem = listViewItemList.get(position);
 
         name.setText(listViewItem.getName());
         number.setText(listViewItem.getNumber());
         email.setText(listViewItem.getEmail());
-        photo.setImageResource(listViewItem.getPhoto());
+        photo.setImageURI(listViewItem.getPhoto());
 
         return convertView;
     }

@@ -1,19 +1,30 @@
 package com.example.project1.ui.phonebook;
 
+import android.net.Uri;
+
 import java.io.IOException;
 import java.io.InputStream;
 
 public class JsonData {
-    private String  name;
+    private String name;
     private String number;
     private String email;
-    private int photo;
+    private Uri photo;
 
-    public int getPhoto() {
+    public JsonData() { }
+
+    public JsonData(String name, String number, String email, Uri photo) {
+        this.name = name;
+        this.number = number;
+        this.email = email;
+        this.photo = photo;
+    }
+
+    public Uri getPhoto() {
         return photo;
     }
 
-    public void setPhoto(int photo) {
+    public void setPhoto(Uri photo) {
         this.photo = photo;
     }
 
@@ -40,6 +51,4 @@ public class JsonData {
     public void setEmail(String email) {
         this.email = email;
     }
-
-
 }

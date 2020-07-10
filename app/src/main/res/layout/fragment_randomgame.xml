@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:layout_marginBottom="60dp"
     android:weightSum="21"
     tools:context=".ui.randomgame.RandomGameFragment">
 
