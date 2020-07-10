@@ -39,8 +39,8 @@ public class RandomGameFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        randomGameViewModel =
-                ViewModelProviders.of(this).get(RandomGameViewModel.class);
+       // randomGameViewModel =
+        //        ViewModelProviders.of(this).get(RandomGameViewModel.class);
         View root = inflater.inflate(R.layout.fragment_randomgame, container, false);
 
         recyclerView = root.findViewById(R.id.rg_recycler_view);

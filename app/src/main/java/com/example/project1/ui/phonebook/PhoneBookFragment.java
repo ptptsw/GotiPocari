@@ -31,7 +31,7 @@ import java.util.ArrayList;
 
 public class PhoneBookFragment extends Fragment {
     private static final int PERMISSIONS_REQUEST_READ_CONTACTS = 1;
-    private PhoneBookViewModel phoneBookViewModel;
+   // private PhoneBookViewModel phoneBookViewModel;
     private Adapter adapter;
     private ArrayList<JsonData> contactList;
     private EditText searchbutton;
@@ -39,7 +39,7 @@ public class PhoneBookFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        phoneBookViewModel = ViewModelProviders.of(this).get(PhoneBookViewModel.class);
+        //phoneBookViewModel = ViewModelProviders.of(this).get(PhoneBookViewModel.class);
         View root = inflater.inflate(R.layout.fragment_phonebook, container, false);
 
         contactList = new ArrayList<JsonData>();
