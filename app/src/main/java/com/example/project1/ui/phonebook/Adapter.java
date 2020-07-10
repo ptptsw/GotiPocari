@@ -96,9 +96,11 @@ public class Adapter extends BaseAdapter {
         number.setText(listViewItem.getNumber());
         email.setText(listViewItem.getEmail());
         photo.setImageURI(listViewItem.getPhoto());
+        if (photo.getDrawable() == null)
+            photo.setImageResource(R.drawable.ic_profile_placeholder);
+
 
         ImageButton callButton= (ImageButton)convertView.findViewById(R.id.callButton);
-        //ConstraintLayout cmdArea= (ConstraintLayout)convertView.findViewById(R.id.listview_layout);
         callButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v){
                 JsonData data = listViewItemList.get(pos);
