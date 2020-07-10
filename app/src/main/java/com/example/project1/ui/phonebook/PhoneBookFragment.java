@@ -36,37 +36,18 @@ public class PhoneBookFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-
-
         phoneBookViewModel = ViewModelProviders.of(this).get(PhoneBookViewModel.class);
         View root = inflater.inflate(R.layout.fragment_phonebook, container, false);
 
-
-
-
-        adapter = new Adapter();
-        ListView listview = (ListView)root.findViewById(R.id.listView);
+        contactList = new ArrayList<JsonData>();
+        adapter = new Adapter(this.contactList, this.getContext());
+        requestContactList();
+        ListView listview = root.findViewById(R.id.listView);
         listview.setAdapter(adapter);
 
-        //
+        return root;
+    }
 
-        String json = this.getJsonString();
-
-        try{
-            JSONObject jsonObject = new JSONObject(json);
-
-            JSONArray Array = jsonObject.getJSONArray("Contacts");
-
-            for(int i=0; i< Array.length(); i++)
-            {
-                JSONObject Object = Array.getJSONObject(i);
-
-
-                adapter.addItem(Object.getString("name"), Object.getString("number"),Object.getString("email"), R.drawable.ic__);
-            }
-        }catch (JSONException e) {
-           // System.out.println("fqwefffffffffffffffffffffffffffffffffffffffffffffffffff");
-            e.printStackTrace();
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         switch (requestCode) {
@@ -83,18 +64,6 @@ public class PhoneBookFragment extends Fragment {
             requestPermissions(new String[]{  Manifest.permission.READ_CONTACTS }, PERMISSIONS_REQUEST_READ_CONTACTS);
     }
 
-       /* jsonParsing(json); //contact list에 추가 완료*/
-
-
-
-
-        adapter.notifyDataSetChanged();
-
-
-
-
-
-        return root;
     private String fetchPhoneNumber(ContentResolver cr, String id) {
         Cursor phoneCursor = cr.query(
                 ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
