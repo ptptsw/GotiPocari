@@ -44,7 +44,7 @@ public class PhoneBookFragment extends Fragment {
         requestContactList();
         ListView listview = root.findViewById(R.id.listView);
         listview.setAdapter(adapter);
-
+        
         return root;
     }
 
