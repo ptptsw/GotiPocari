@@ -5,13 +5,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,6 +24,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import com.example.project1.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Adapter extends BaseAdapter {
 
@@ -102,14 +107,17 @@ public class Adapter extends BaseAdapter {
         //ConstraintLayout cmdArea= (ConstraintLayout)convertView.findViewById(R.id.listview_layout);
         callButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v){
-                //해당 리스트 클릭시 이벤트
                 JsonData data = listViewItemList.get(pos);
                 Intent call = new Intent(Intent.ACTION_CALL, Uri.parse("tel:"+data.getNumber()));
                 context.startActivity(call);
             }
         });
+
+
         return convertView;
     }
+
+
 
 
 }

@@ -8,9 +8,12 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ListView;
 
 
@@ -22,12 +25,15 @@ import com.example.project1.R;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 
 public class PhoneBookFragment extends Fragment {
     private static final int PERMISSIONS_REQUEST_READ_CONTACTS = 1;
     private PhoneBookViewModel phoneBookViewModel;
     private Adapter adapter;
     private ArrayList<JsonData> contactList;
+    private EditText searchbutton;
+    private ArrayList<JsonData> list_copy;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -76,7 +82,7 @@ public class PhoneBookFragment extends Fragment {
         phoneCursor.close();
         return number;
     }
-    
+
     private String fetchEmail(ContentResolver cr, String id) {
         Cursor emailCursor = cr.query(
                 ContactsContract.CommonDataKinds.Email.CONTENT_URI,
