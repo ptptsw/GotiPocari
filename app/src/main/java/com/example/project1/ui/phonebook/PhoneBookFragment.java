@@ -1,5 +1,9 @@
 package com.example.project1.ui.phonebook;
 
+import android.Manifest;
+import android.content.ContentResolver;
+import android.content.ContentUris;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
@@ -13,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -24,11 +29,10 @@ import java.io.InputStream;
 import java.util.ArrayList;
 
 public class PhoneBookFragment extends Fragment {
-
+    private static final int PERMISSIONS_REQUEST_READ_CONTACTS = 1;
     private PhoneBookViewModel phoneBookViewModel;
     private Adapter adapter;
-
-    //private ArrayList<JsonData> contactlist;
+    private ArrayList<JsonData> contactList;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -65,6 +69,12 @@ public class PhoneBookFragment extends Fragment {
             e.printStackTrace();
         }
 
+    private void requestContactList() {
+        if (ActivityCompat.checkSelfPermission(getContext(), android.Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED)
+            getContactList();
+        else
+            requestPermissions(new String[]{  Manifest.permission.READ_CONTACTS }, PERMISSIONS_REQUEST_READ_CONTACTS);
+    }
 
        /* jsonParsing(json); //contact list에 추가 완료*/
 
@@ -133,33 +143,27 @@ public class PhoneBookFragment extends Fragment {
         return Uri.withAppendedPath(person, ContactsContract.Contacts.Photo.CONTENT_DIRECTORY);
     }
 
+    private void getContactList() {
+        ContentResolver cr = getActivity().getContentResolver();
+        Cursor cur = cr.query(ContactsContract.Contacts.CONTENT_URI, null, null, null, null);
 
+        if (cur == null || cur.getCount() == 0)
+            return;
 
-    private void jsonParsing(String json)
-    {
-        try{
-            JSONObject jsonObject = new JSONObject(json);
+        while (cur != null && cur.moveToNext()) {
+            String id = cur.getString(cur.getColumnIndex(ContactsContract.Contacts._ID));
+            String name = cur.getString(cur.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
+            String number = fetchPhoneNumber(cr, id);
+            String email = fetchEmail(cr, id);
+            Uri photo = fetchPhotoUri(cr, id);
 
-            JSONArray Array = jsonObject.getJSONArray("Contacts");
-
-            for(int i=0; i< Array.length(); i++)
-            {
-                JSONObject Object = Array.getJSONObject(i);
-
-                JsonData data = new JsonData();
-
-                data.setName(Object.getString("name"));
-                data.setNumber(Object.getString("number"));
-                data.setPhoto(Object.getInt("photo"));
-
-
-            }
-        }catch (JSONException e) {
-            e.printStackTrace();
+            contactList.add(new JsonData(name, number, email, photo));
         }
+
+        if (cur != null)
+            cur.close();
+
+        adapter.notifyDataSetChanged();
     }
 }
-
-
-
 
