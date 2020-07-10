@@ -1,16 +1,8 @@
 package com.example.project1.ui.phonebook;
 
 import android.Manifest;
-import android.content.ContentResolver;
-import android.content.ContentUris;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.provider.ContactsContract;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,19 +11,19 @@ import android.widget.ListView;
 
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.project1.R;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 
 public class PhoneBookFragment extends Fragment {
     private static final int PERMISSIONS_REQUEST_READ_CONTACTS = 1;
-   // private PhoneBookViewModel phoneBookViewModel;
+    private PhoneBookViewModel phoneBookViewModel;
     private Adapter adapter;
     private ArrayList<JsonData> contactList;
     private EditText searchbutton;
@@ -39,15 +31,21 @@ public class PhoneBookFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        //phoneBookViewModel = ViewModelProviders.of(this).get(PhoneBookViewModel.class);
+        PhoneBookViewModelFactory factory = new PhoneBookViewModelFactory(this.getContext());
+        phoneBookViewModel = ViewModelProviders.of(getActivity(), factory).get(PhoneBookViewModel.class);
         View root = inflater.inflate(R.layout.fragment_phonebook, container, false);
-
-        contactList = new ArrayList<JsonData>();
-        adapter = new Adapter(this.contactList, this.getContext());
-        requestContactList();
+        adapter = new Adapter(new ArrayList<JsonData>(), this.getContext());
+        final Observer<ArrayList<JsonData>> contactObserver = new Observer<ArrayList<JsonData>>() {
+            @Override
+            public void onChanged(@Nullable final ArrayList<JsonData> newContacts) {
+                adapter.updateItems(newContacts);
+            }
+        };
         ListView listview = root.findViewById(R.id.listView);
         listview.setAdapter(adapter);
-        
+        requestContactList();
+        phoneBookViewModel.getContacts().observe(getViewLifecycleOwner(), contactObserver);
+
         return root;
     }
 
