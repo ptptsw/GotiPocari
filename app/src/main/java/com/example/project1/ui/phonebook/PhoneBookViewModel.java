@@ -1,38 +1,25 @@
 package com.example.project1.ui.phonebook;
-
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-
+import android.content.Context;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.project1.R;
-
-
 import java.util.ArrayList;
 
 public class PhoneBookViewModel extends ViewModel {
-    private Adapter adapter;
-    private JsonData listview;
+    private MutableLiveData<ArrayList<JsonData>> contactList;
+    private ContactRepository repository;
 
-    public Adapter getAdapter() {
-        return adapter;
+    public PhoneBookViewModel(Context context) {
+        repository = new ContactRepository(context);
+        contactList = new MutableLiveData<>();
     }
 
-    public void setAdapter(Adapter adapter) {
-        this.adapter = adapter;
+    public LiveData<ArrayList<JsonData>> getContacts() {
+        return contactList;
     }
 
-    public JsonData getListview() {
-        return listview;
+    public void initializeContacts() {
+        contactList.setValue(repository.getContactList());
     }
-
-    public void setListview(JsonData listview) {
-        this.listview = listview;
-    }
-
-
-
-
 }
