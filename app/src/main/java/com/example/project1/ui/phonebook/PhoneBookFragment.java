@@ -48,6 +48,7 @@ public class PhoneBookFragment extends Fragment {
         return root;
     }
 
+
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         switch (requestCode) {
