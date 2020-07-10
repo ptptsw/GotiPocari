@@ -1,4 +1,4 @@
-package com.example.project1.ui.search;
+package com.example.project1.ui.Search;
 
 import android.os.Bundle;
 import android.text.Editable;
@@ -11,16 +11,10 @@ import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProviders;
 
 import com.example.project1.R;
 import com.example.project1.ui.phonebook.Adapter;
 import com.example.project1.ui.phonebook.JsonData;
-import com.example.project1.ui.phonebook.PhoneBookViewModel;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;

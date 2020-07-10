@@ -9,12 +9,14 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ListView;
+
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
@@ -22,7 +24,6 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.project1.R;
-import com.example.project1.ui.search.SearchAdapter;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -33,6 +34,8 @@ public class PhoneBookFragment extends Fragment {
     private PhoneBookViewModel phoneBookViewModel;
     private Adapter adapter;
     private ArrayList<JsonData> contactList;
+    private EditText searchbutton;
+    private ArrayList<JsonData> list_copy;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -44,9 +47,10 @@ public class PhoneBookFragment extends Fragment {
         requestContactList();
         ListView listview = root.findViewById(R.id.listView);
         listview.setAdapter(adapter);
-
+        
         return root;
     }
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {

@@ -4,5 +4,6 @@
     <string name="title_dashboard">Pictures</string>
     <string name="title_randomgame">Random Game</string>
     <string name="title_search">Search</string>
+    <string name="title_dial">Dial</string>
     <string name="randgame_button_text">Spin!</string>
 </resources>
