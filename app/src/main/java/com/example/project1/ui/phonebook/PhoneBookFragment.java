@@ -78,28 +78,59 @@ public class PhoneBookFragment extends Fragment {
 
 
         return root;
+    private String fetchPhoneNumber(ContentResolver cr, String id) {
+        Cursor phoneCursor = cr.query(
+                ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+                null,
+                ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = " + id,
+                null,
+                null
+        );
+        String number = "";
+
+        if (phoneCursor.moveToFirst())
+            number = phoneCursor.getString(phoneCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+
+        phoneCursor.close();
+        return number;
     }
 
-    private String getJsonString()
-    {
-        String json = "";
+    private String fetchEmail(ContentResolver cr, String id) {
+        Cursor emailCursor = cr.query(
+                ContactsContract.CommonDataKinds.Email.CONTENT_URI,
+                null,
+                ContactsContract.CommonDataKinds.Email.CONTACT_ID + " = " + id,
+                null,
+                null
+        );
 
+        String email = "";
+        if (emailCursor.moveToFirst())
+            email = emailCursor.getString(emailCursor.getColumnIndex(ContactsContract.CommonDataKinds.Email.DATA));
+
+        emailCursor.close();
+        return email;
+    }
+
+    private Uri fetchPhotoUri(ContentResolver cr, String id) {
         try {
-            InputStream is = this.getContext().getAssets().open("contact_list.json");
-            int fileSize = is.available();
+            Cursor cursor = cr.query(
+                    ContactsContract.Data.CONTENT_URI,
+                    null,
+                    ContactsContract.Data.CONTACT_ID + " = " + id + " AND " + ContactsContract.Data.MIMETYPE + "='" + ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE + "'",
+                    null,
+                    null
+            );
+            if (cursor == null || !cursor.moveToFirst())
+                return null;
 
-            byte[] buffer = new byte[fileSize];
-            is.read(buffer);
-            is.close();
-
-            json = new String(buffer, "UTF-8");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
         }
-        catch (IOException ex)
-        {
-            ex.printStackTrace();
-        }
 
-        return json;
+        Uri person = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, Long.parseLong(id));
+        return Uri.withAppendedPath(person, ContactsContract.Contacts.Photo.CONTENT_DIRECTORY);
     }
 
 
