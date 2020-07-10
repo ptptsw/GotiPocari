@@ -37,7 +37,7 @@ public class SearchFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        View root = inflater.inflate(R.layout.fragment_phonebook, container, false);
+        View root = inflater.inflate(R.layout.fragment_search_main, container, false);
 
         adapter = new Adapter();
         editSearch = (EditText) root.findViewById(R.id.editSearch);

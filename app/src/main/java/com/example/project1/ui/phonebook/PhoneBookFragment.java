@@ -1,15 +1,20 @@
 package com.example.project1.ui.phonebook;
 
+import android.app.SearchManager;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Movie;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -19,6 +24,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.project1.R;
+import com.example.project1.ui.search.SearchAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -32,6 +38,7 @@ public class PhoneBookFragment extends Fragment {
 
     private PhoneBookViewModel phoneBookViewModel;
     private Adapter adapter;
+
     //private ArrayList<JsonData> contactlist;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -40,7 +47,6 @@ public class PhoneBookFragment extends Fragment {
 
         phoneBookViewModel = ViewModelProviders.of(this).get(PhoneBookViewModel.class);
         View root = inflater.inflate(R.layout.fragment_phonebook, container, false);
-
 
 
 
@@ -77,6 +83,7 @@ public class PhoneBookFragment extends Fragment {
 
 
         adapter.notifyDataSetChanged();
+
 
 
 
