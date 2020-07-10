@@ -76,7 +76,7 @@ public class PhoneBookFragment extends Fragment {
         phoneCursor.close();
         return number;
     }
-
+    
     private String fetchEmail(ContentResolver cr, String id) {
         Cursor emailCursor = cr.query(
                 ContactsContract.CommonDataKinds.Email.CONTENT_URI,
