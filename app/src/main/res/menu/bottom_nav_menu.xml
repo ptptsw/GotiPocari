@@ -3,11 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/action_search"
-        android:icon="@drawable/ic_search_black_24dp"
-        android:title="@string/title_search"
-        app:actionViewClass="android.widget.SearchView"
-        app:showAsAction="always" />
+        android:id="@+id/navigation_dial"
+        android:title="Dial" />
     <item
         android:id="@+id/navigation_phonebook"
         android:icon="@drawable/ic_phonebook"

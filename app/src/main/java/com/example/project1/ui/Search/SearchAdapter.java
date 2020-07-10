@@ -1,4 +1,4 @@
-package com.example.project1.ui.search;
+package com.example.project1.ui.Search;
 
 import android.content.Context;
 import android.view.LayoutInflater;
