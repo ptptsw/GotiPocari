@@ -1,13 +1,9 @@
 package com.example.project1.ui.Dial;
 
-
 import android.Manifest;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 
 import android.view.LayoutInflater;
@@ -19,17 +15,10 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
-import com.example.project1.MainActivity;
 import com.example.project1.R;
 
-import static androidx.core.content.PermissionChecker.checkSelfPermission;
-
-/**
- * Created by sgs on 2016-08-02.
- */
 public class Dial extends Fragment implements  View.OnClickListener{
     private Button b1,b2,b3,b4,b5,b6,b7,b8,b9,b0,btext,bcall;
     private TextView text;
@@ -130,42 +119,22 @@ public class Dial extends Fragment implements  View.OnClickListener{
                 break;
         }
         text.setText(count);
-
-
     }
-
-
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-
         if (requestCode == 1000) {
-
             /* 요청한 권한을 사용자가 "허용"했다면 인텐트를 띄워라
-
                 내가 요청한 게 하나밖에 없기 때문에. 원래 같으면 for문을 돈다.*/
-
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
                 Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:010-1111-2222"));
-
                 if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-
                     startActivity(intent);
-
                 }
-
             }
-
             else {
-
                 Toast.makeText(getActivity(), "권한 요청을 거부했습니다.", Toast.LENGTH_SHORT).show();
-
             }
-
-
-
         }
-
     }
 
     private void requestRequiredPermissions() {
@@ -178,7 +147,3 @@ public class Dial extends Fragment implements  View.OnClickListener{
             requestPermissions(requiredPermissions, PERMISSIONS_REQUEST_ALL);
     }
 }
-
-
-
-
