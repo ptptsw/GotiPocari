@@ -22,7 +22,13 @@ import java.util.ArrayList;
 public class PhoneBookFragment extends Fragment {
     protected static final int PERMISSIONS_REQUEST_READ_CONTACTS = 1;
     protected static final int PERMISSIONS_REQUEST_SEND_SMS = 2;
-    protected static final int PERMISSIONS_REQUEST_ALL = 3;
+    protected static final int PERMISSIONS_CALL_PHONE = 3;
+    protected static final int PERMISSIONS_REQUEST_ALL = 4;
+    private static String[] requiredPermissions = new String[]{
+            Manifest.permission.READ_CONTACTS,
+            Manifest.permission.SEND_SMS,
+            Manifest.permission.CALL_PHONE
+    };
     private PhoneBookViewModel phoneBookViewModel;
     private Adapter adapter;
 
@@ -40,6 +46,7 @@ public class PhoneBookFragment extends Fragment {
         };
         ListView listview = root.findViewById(R.id.listView);
         listview.setAdapter(adapter);
+        initializeContacts();
         requestRequiredPermissions();
         phoneBookViewModel.getContacts().observe(getViewLifecycleOwner(), contactObserver);
 
@@ -56,22 +63,25 @@ public class PhoneBookFragment extends Fragment {
         }
     }
 
-    private void requestRequiredPermissions() {
-        boolean contactPermissionGranted = ActivityCompat.checkSelfPermission(getContext(), android.Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED;
-        boolean smsPermissionGranted = ActivityCompat.checkSelfPermission(getContext(), android.Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED;
-        if (contactPermissionGranted && smsPermissionGranted) {
+    private void initializeContacts() {
+        if (ActivityCompat.checkSelfPermission(getContext(), android.Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED) {
             ArrayList<JsonData> data = phoneBookViewModel.getContacts().getValue();
             if (data == null)
                 phoneBookViewModel.initializeContacts();
             else
                 adapter.updateItems(phoneBookViewModel.getContacts().getValue());
         }
-        else if (!contactPermissionGranted && !smsPermissionGranted)
-            requestPermissions(new String[]{ Manifest.permission.READ_CONTACTS, Manifest.permission.SEND_SMS }, PERMISSIONS_REQUEST_ALL);
-        else if (!contactPermissionGranted)
-            requestPermissions(new String[]{ Manifest.permission.READ_CONTACTS }, PERMISSIONS_REQUEST_READ_CONTACTS);
-        else
-            requestPermissions(new String[]{ Manifest.permission.SEND_SMS }, PERMISSIONS_REQUEST_SEND_SMS);
+    }
+
+    private void requestRequiredPermissions() {
+        boolean allGranted = true;
+        for (String permission : PhoneBookFragment.requiredPermissions) {
+            boolean granted = ActivityCompat.checkSelfPermission(getContext(), android.Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED;
+            allGranted = allGranted && granted;
+        }
+
+        if (!allGranted)
+            requestPermissions(requiredPermissions, PERMISSIONS_REQUEST_ALL);
     }
 }
 
