@@ -1,8 +1,11 @@
 package com.example.project1.ui.phonebook;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +14,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.core.app.ActivityCompat;
 
 import com.example.project1.R;
 
@@ -111,9 +116,13 @@ public class Adapter extends BaseAdapter {
         ImageButton smsButton = (ImageButton)convertView.findViewById(R.id.smsButton);
         smsButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                JsonData data = listViewItemList.get(pos);
-                Intent send = new Intent(Intent.ACTION_SENDTO, Uri.parse("smsto:" + data.getNumber()));
-                context.startActivity(send);
+                if (ActivityCompat.checkSelfPermission(Adapter.this.context, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED)
+                    ActivityCompat.requestPermissions((Activity)Adapter.this.context, new String[]{ Manifest.permission.SEND_SMS }, PhoneBookFragment.PERMISSIONS_REQUEST_SEND_SMS);
+                else {
+                    JsonData data = listViewItemList.get(pos);
+                    Intent send = new Intent(Intent.ACTION_SENDTO, Uri.parse("smsto:" + data.getNumber()));
+                    context.startActivity(send);
+                }
             }
         });
         return convertView;
