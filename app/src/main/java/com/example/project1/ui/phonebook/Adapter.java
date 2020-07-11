@@ -99,13 +99,21 @@ public class Adapter extends BaseAdapter {
         if (photo.getDrawable() == null)
             photo.setImageResource(R.drawable.ic_profile_placeholder);
 
-
         ImageButton callButton= (ImageButton)convertView.findViewById(R.id.callButton);
         callButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v){
+            public void onClick(View v) {
                 JsonData data = listViewItemList.get(pos);
                 Intent call = new Intent(Intent.ACTION_CALL, Uri.parse("tel:"+data.getNumber()));
                 context.startActivity(call);
+            }
+        });
+
+        ImageButton smsButton = (ImageButton)convertView.findViewById(R.id.smsButton);
+        smsButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                JsonData data = listViewItemList.get(pos);
+                Intent send = new Intent(Intent.ACTION_SENDTO, Uri.parse("smsto:" + data.getNumber()));
+                context.startActivity(send);
             }
         });
         return convertView;
