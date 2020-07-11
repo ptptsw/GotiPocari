@@ -90,7 +90,7 @@ public class Dial extends Fragment implements  View.OnClickListener{
     private void requestRequiredPermissions() {
         boolean allGranted = true;
         for (String permission : Dial.requiredPermissions) {
-            boolean granted = ActivityCompat.checkSelfPermission(getContext(), android.Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED;
+            boolean granted = ActivityCompat.checkSelfPermission(getContext(), permission) == PackageManager.PERMISSION_GRANTED;
             allGranted = allGranted && granted;
         }
         if (!allGranted)
