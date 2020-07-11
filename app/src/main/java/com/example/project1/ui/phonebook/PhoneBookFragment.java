@@ -21,6 +21,8 @@ import java.util.ArrayList;
 
 public class PhoneBookFragment extends Fragment {
     private static final int PERMISSIONS_REQUEST_READ_CONTACTS = 1;
+    private static final int PERMISSIONS_REQUEST_SEND_SMS = 2;
+    private static final int PERMISSIONS_REQUEST_ALL = 3;
     private PhoneBookViewModel phoneBookViewModel;
     private Adapter adapter;
 
@@ -38,23 +40,23 @@ public class PhoneBookFragment extends Fragment {
         };
         ListView listview = root.findViewById(R.id.listView);
         listview.setAdapter(adapter);
-        requestContactList();
+        requestRequiredPermissions();
         phoneBookViewModel.getContacts().observe(getViewLifecycleOwner(), contactObserver);
 
         return root;
     }
 
-
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         switch (requestCode) {
             case PERMISSIONS_REQUEST_READ_CONTACTS:
+            case PERMISSIONS_REQUEST_ALL:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
                     phoneBookViewModel.initializeContacts();
         }
     }
 
-    private void requestContactList() {
+    private void requestRequiredPermissions() {
         if (ActivityCompat.checkSelfPermission(getContext(), android.Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED) {
             ArrayList<JsonData> data = phoneBookViewModel.getContacts().getValue();
             if (data == null)
@@ -62,6 +64,8 @@ public class PhoneBookFragment extends Fragment {
             else
                 adapter.updateItems(phoneBookViewModel.getContacts().getValue());
         }
+        else if (ActivityCompat.checkSelfPermission(getContext(), android.Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED)
+            requestPermissions(new String[]{ Manifest.permission.READ_CONTACTS, Manifest.permission.SEND_SMS }, PERMISSIONS_REQUEST_ALL);
         else
             requestPermissions(new String[]{ Manifest.permission.READ_CONTACTS }, PERMISSIONS_REQUEST_READ_CONTACTS);
     }
