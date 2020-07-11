@@ -34,7 +34,13 @@ public class Dial extends Fragment implements  View.OnClickListener{
     private Button b1,b2,b3,b4,b5,b6,b7,b8,b9,b0,btext,bcall;
     private TextView text;
     String count ="";
-
+    private static final int PERMISSIONS_REQUEST_SEND_SMS = 1;
+    private static final int PERMISSIONS_CALL_PHONE = 2;
+    private static final int PERMISSIONS_REQUEST_ALL = 3;
+    private static String[] requiredPermissions = new String[]{
+            Manifest.permission.SEND_SMS,
+            Manifest.permission.CALL_PHONE
+    };
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -179,6 +185,15 @@ public class Dial extends Fragment implements  View.OnClickListener{
 
     }
 
+    private void requestRequiredPermissions() {
+        boolean allGranted = true;
+        for (String permission : Dial.requiredPermissions) {
+            boolean granted = ActivityCompat.checkSelfPermission(getContext(), android.Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED;
+            allGranted = allGranted && granted;
+        }
+        if (!allGranted)
+            requestPermissions(requiredPermissions, PERMISSIONS_REQUEST_ALL);
+    }
 }
 
 
