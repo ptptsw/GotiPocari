@@ -20,9 +20,9 @@ import com.example.project1.R;
 import java.util.ArrayList;
 
 public class PhoneBookFragment extends Fragment {
-    private static final int PERMISSIONS_REQUEST_READ_CONTACTS = 1;
-    private static final int PERMISSIONS_REQUEST_SEND_SMS = 2;
-    private static final int PERMISSIONS_REQUEST_ALL = 3;
+    protected static final int PERMISSIONS_REQUEST_READ_CONTACTS = 1;
+    protected static final int PERMISSIONS_REQUEST_SEND_SMS = 2;
+    protected static final int PERMISSIONS_REQUEST_ALL = 3;
     private PhoneBookViewModel phoneBookViewModel;
     private Adapter adapter;
 
