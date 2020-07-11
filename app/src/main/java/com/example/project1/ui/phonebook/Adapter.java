@@ -107,9 +107,13 @@ public class Adapter extends BaseAdapter {
         ImageButton callButton= (ImageButton)convertView.findViewById(R.id.callButton);
         callButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                JsonData data = listViewItemList.get(pos);
-                Intent call = new Intent(Intent.ACTION_CALL, Uri.parse("tel:"+data.getNumber()));
-                context.startActivity(call);
+                if (ActivityCompat.checkSelfPermission(Adapter.this.context, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED)
+                    ActivityCompat.requestPermissions((Activity)Adapter.this.context, new String[]{ Manifest.permission.CALL_PHONE }, PhoneBookFragment.PERMISSIONS_CALL_PHONE);
+                else {
+                    JsonData data = listViewItemList.get(pos);
+                    Intent call = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + data.getNumber()));
+                    context.startActivity(call);
+                }
             }
         });
 
