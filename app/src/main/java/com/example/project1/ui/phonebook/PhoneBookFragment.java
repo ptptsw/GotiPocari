@@ -57,17 +57,21 @@ public class PhoneBookFragment extends Fragment {
     }
 
     private void requestRequiredPermissions() {
-        if (ActivityCompat.checkSelfPermission(getContext(), android.Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED) {
+        boolean contactPermissionGranted = ActivityCompat.checkSelfPermission(getContext(), android.Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED;
+        boolean smsPermissionGranted = ActivityCompat.checkSelfPermission(getContext(), android.Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED;
+        if (contactPermissionGranted && smsPermissionGranted) {
             ArrayList<JsonData> data = phoneBookViewModel.getContacts().getValue();
             if (data == null)
                 phoneBookViewModel.initializeContacts();
             else
                 adapter.updateItems(phoneBookViewModel.getContacts().getValue());
         }
-        else if (ActivityCompat.checkSelfPermission(getContext(), android.Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED)
+        else if (!contactPermissionGranted && !smsPermissionGranted)
             requestPermissions(new String[]{ Manifest.permission.READ_CONTACTS, Manifest.permission.SEND_SMS }, PERMISSIONS_REQUEST_ALL);
-        else
+        else if (!contactPermissionGranted)
             requestPermissions(new String[]{ Manifest.permission.READ_CONTACTS }, PERMISSIONS_REQUEST_READ_CONTACTS);
+        else
+            requestPermissions(new String[]{ Manifest.permission.SEND_SMS }, PERMISSIONS_REQUEST_SEND_SMS);
     }
 }
 
