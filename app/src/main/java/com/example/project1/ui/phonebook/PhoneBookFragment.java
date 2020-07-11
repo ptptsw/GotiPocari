@@ -6,9 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.ListView;
-
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -25,9 +23,6 @@ public class PhoneBookFragment extends Fragment {
     private static final int PERMISSIONS_REQUEST_READ_CONTACTS = 1;
     private PhoneBookViewModel phoneBookViewModel;
     private Adapter adapter;
-    private ArrayList<JsonData> contactList;
-    private EditText searchbutton;
-    private ArrayList<JsonData> list_copy;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
