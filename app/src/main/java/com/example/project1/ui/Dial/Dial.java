@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,6 +22,8 @@ import com.example.project1.R;
 
 public class Dial extends Fragment implements  View.OnClickListener{
     private Button[] buttons;
+    private ImageButton callButton;
+    private ImageButton smsButton;
     private TextView text;
     String count ="";
     private static final int PERMISSIONS_REQUEST_SEND_SMS = 1;
@@ -38,12 +41,19 @@ public class Dial extends Fragment implements  View.OnClickListener{
         requestRequiredPermissions();
 
         // text and call's indices are 11 and 12, respectively
-        int[] buttonIDs = new int[]{ R.id.b0, R.id.b1, R.id.b2, R.id.b3, R.id.b4, R.id.b5, R.id.b6, R.id.b7, R.id.b8, R.id.b9, R.id.btext, R.id.bcall };
+        int[] buttonIDs = new int[]{ R.id.b0, R.id.b1, R.id.b2, R.id.b3, R.id.b4, R.id.b5, R.id.b6, R.id.b7, R.id.b8, R.id.b9 };
+
         buttons = new Button[buttonIDs.length];
         for (int i = 0; i < buttonIDs.length; i++) {
             buttons[i] = view.findViewById(buttonIDs[i]);
             buttons[i].setOnClickListener(this);
         }
+
+        callButton = view.findViewById(R.id.bcall);
+        callButton.setOnClickListener(this);
+        smsButton = view.findViewById(R.id.btext);
+        smsButton.setOnClickListener(this);
+
         text = (TextView)view.findViewById(R.id.text);
 
         return view;
