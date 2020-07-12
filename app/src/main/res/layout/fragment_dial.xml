@@ -48,7 +48,7 @@
                 />
             <Space
                 android:layout_height="match_parent"
-                android:layout_width="5dp"
+                android:layout_width="15dp"
                 />
             <Button
                 android:textSize="30dp"
@@ -61,7 +61,7 @@
                 />
             <Space
                 android:layout_height="match_parent"
-                android:layout_width="5dp"
+                android:layout_width="15dp"
                 />
             <Button
                 android:textSize="30dp"
@@ -91,7 +91,7 @@
                 />
             <Space
                 android:layout_height="match_parent"
-                android:layout_width="5dp"
+                android:layout_width="15dp"
                 />
 
             <Button
@@ -105,7 +105,7 @@
                 />
             <Space
                 android:layout_height="match_parent"
-                android:layout_width="5dp"
+                android:layout_width="15dp"
                 />
 
             <Button
@@ -135,7 +135,7 @@
                 />
             <Space
                 android:layout_height="match_parent"
-                android:layout_width="5dp"
+                android:layout_width="15dp"
                 />
             <Button
                 android:layout_width="70dp"
@@ -148,7 +148,7 @@
                 />
             <Space
                 android:layout_height="match_parent"
-                android:layout_width="5dp"
+                android:layout_width="15dp"
                 />
             <Button
                 android:textSize="30dp"
@@ -177,7 +177,7 @@
                 />
             <Space
                 android:layout_height="match_parent"
-                android:layout_width="5dp"
+                android:layout_width="15dp"
                 />
             <Button
                 android:textSize="30dp"
@@ -190,7 +190,7 @@
                 />
             <Space
                 android:layout_height="match_parent"
-                android:layout_width="5dp"
+                android:layout_width="15dp"
                 />
             <ImageButton
                 android:layout_width="70dp"
