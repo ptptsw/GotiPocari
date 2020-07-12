@@ -24,8 +24,9 @@ public class Dial extends Fragment implements  View.OnClickListener{
     private Button[] buttons;
     private ImageButton callButton;
     private ImageButton smsButton;
+    private ImageButton backspaceButton;
     private TextView text;
-    String count ="";
+    private String count ="";
     private static final int PERMISSIONS_REQUEST_SEND_SMS = 1;
     private static final int PERMISSIONS_CALL_PHONE = 2;
     private static final int PERMISSIONS_REQUEST_ALL = 3;
@@ -53,6 +54,8 @@ public class Dial extends Fragment implements  View.OnClickListener{
         callButton.setOnClickListener(this);
         smsButton = view.findViewById(R.id.btext);
         smsButton.setOnClickListener(this);
+        backspaceButton = view.findViewById(R.id.backspace);
+        backspaceButton.setOnClickListener(this);
 
         text = (TextView)view.findViewById(R.id.text);
 
@@ -61,7 +64,9 @@ public class Dial extends Fragment implements  View.OnClickListener{
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.btext) {
+        if (v.getId() == R.id.backspace) {
+            count = count.substring(0, count.length() - 1);
+        } else if (v.getId() == R.id.btext) {
             if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED)
                 ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.SEND_SMS}, PERMISSIONS_REQUEST_SEND_SMS);
             else {
