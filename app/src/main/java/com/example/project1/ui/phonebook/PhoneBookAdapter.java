@@ -1,12 +1,19 @@
 package com.example.project1.ui.phonebook;
 
-import android.graphics.drawable.Drawable;
+import android.Manifest;
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.project1.R;
@@ -15,13 +22,22 @@ import java.util.ArrayList;
 
 public class PhoneBookAdapter extends RecyclerView.Adapter<PhoneBookAdapter.PhoneBookViewHolder> {
     private ArrayList<JsonData> listViewItemList;
+    private Context context;
 
-    public static class PhoneBookViewHolder extends RecyclerView.ViewHolder {
+    public PhoneBookAdapter(ArrayList<JsonData> items, Context context) {
+        this.listViewItemList = items;
+        this.context = context;
+    }
+
+    public class PhoneBookViewHolder extends RecyclerView.ViewHolder {
         private ImageView photo;
         private TextView name;
         private TextView number;
         private TextView email;
+        private ImageButton callButton;
+        private ImageButton smsButton;
         private View expandableList;
+
         public PhoneBookViewHolder(View itemView) {
             super(itemView);
 
@@ -30,9 +46,11 @@ public class PhoneBookAdapter extends RecyclerView.Adapter<PhoneBookAdapter.Phon
             email = itemView.findViewById(R.id.email);
             photo = itemView.findViewById(R.id.photo);
             expandableList = itemView.findViewById(R.id.expandable_list);
+            callButton = itemView.findViewById(R.id.call_button);
+            smsButton = itemView.findViewById(R.id.sms_button);
         }
 
-        public void bind(JsonData item) {
+        public void bind(final JsonData item) {
             boolean expanded = item.getExpanded();
 
             expandableList.setVisibility(expanded ? View.VISIBLE : View.GONE);
@@ -41,11 +59,29 @@ public class PhoneBookAdapter extends RecyclerView.Adapter<PhoneBookAdapter.Phon
             number.setText(item.getNumber());
             email.setText(item.getEmail());
             photo.setImageURI(item.getPhoto());
-        }
-    }
 
-    public PhoneBookAdapter(ArrayList<JsonData> items) {
-        this.listViewItemList = items;
+            callButton.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    if (ActivityCompat.checkSelfPermission(PhoneBookAdapter.this.context, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED)
+                        ActivityCompat.requestPermissions((Activity)PhoneBookAdapter.this.context, new String[]{ Manifest.permission.CALL_PHONE }, PhoneBookFragment.PERMISSIONS_CALL_PHONE);
+                    else {
+                        Intent call = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + item.getNumber()));
+                        context.startActivity(call);
+                    }
+                }
+            });
+
+            smsButton.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    if (ActivityCompat.checkSelfPermission(PhoneBookAdapter.this.context, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED)
+                        ActivityCompat.requestPermissions((Activity)PhoneBookAdapter.this.context, new String[]{ Manifest.permission.SEND_SMS }, PhoneBookFragment.PERMISSIONS_REQUEST_SEND_SMS);
+                    else {
+                        Intent send = new Intent(Intent.ACTION_SENDTO, Uri.parse("smsto:" + item.getNumber()));
+                        context.startActivity(send);
+                    }
+                }
+            });
+        }
     }
 
     @Override

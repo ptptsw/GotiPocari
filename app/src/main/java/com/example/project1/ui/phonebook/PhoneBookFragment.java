@@ -39,7 +39,7 @@ public class PhoneBookFragment extends Fragment {
         PhoneBookViewModelFactory factory = new PhoneBookViewModelFactory(this.getContext());
         phoneBookViewModel = ViewModelProviders.of(getActivity(), factory).get(PhoneBookViewModel.class);
         View root = inflater.inflate(R.layout.fragment_phonebook, container, false);
-        adapter = new PhoneBookAdapter(new ArrayList<JsonData>());
+        adapter = new PhoneBookAdapter(new ArrayList<JsonData>(), getContext());
         final Observer<ArrayList<JsonData>> contactObserver = new Observer<ArrayList<JsonData>>() {
             @Override
             public void onChanged(@Nullable final ArrayList<JsonData> newContacts) {
