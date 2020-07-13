@@ -3,12 +3,14 @@ package com.example.project1.ui.phonebook;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SearchView;
 
@@ -19,7 +21,6 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.example.project1.MainActivity;
 import com.example.project1.R;
 
 import java.util.ArrayList;
@@ -36,6 +37,10 @@ public class PhoneBookFragment extends Fragment {
     };
     private PhoneBookViewModel phoneBookViewModel;
     private Adapter adapter;
+    private ListView listview;
+    private ArrayAdapter searchAdapter;
+    private SearchView searchView;
+    private ArrayList<JsonData> backupList;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -43,17 +48,21 @@ public class PhoneBookFragment extends Fragment {
         phoneBookViewModel = ViewModelProviders.of(getActivity(), factory).get(PhoneBookViewModel.class);
         View root = inflater.inflate(R.layout.fragment_phonebook, container, false);
         adapter = new Adapter(new ArrayList<JsonData>(), this.getContext());
+       // searchAdapter = new ArrayAdapter(root.getContext(), R.layout.fragment_phonebook);
+
         final Observer<ArrayList<JsonData>> contactObserver = new Observer<ArrayList<JsonData>>() {
             @Override
             public void onChanged(@Nullable final ArrayList<JsonData> newContacts) {
                 adapter.updateItems(newContacts);
             }
         };
-        ListView listview = root.findViewById(R.id.listView);
+        listview = root.findViewById(R.id.listView);
         listview.setAdapter(adapter);
+
         initializeContacts();
         requestRequiredPermissions();
         phoneBookViewModel.getContacts().observe(getViewLifecycleOwner(), contactObserver);
+
         setHasOptionsMenu(true); // For option menu
         return root;
     }
@@ -91,30 +100,60 @@ public class PhoneBookFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-        menu.clear();
-
+        backupList = new ArrayList<>();
+        backupList.addAll(adapter.getFilteredItemList());
         inflater.inflate(R.menu.top_menu, menu);
         MenuItem item = menu.findItem(R.id.action_search);
         item.setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW | MenuItem.SHOW_AS_ACTION_IF_ROOM);
 
-        SearchView searchView = (SearchView) item.getActionView();
+        searchView = (SearchView) item.getActionView();
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 
             @Override
             public boolean onQueryTextSubmit(String query) {
+               // listview.setAdapter(searchAdapter);
+                //adapter.fillter(query);
+                Log.d("submitted: ",query);
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                ArrayList<JsonData> tmpList = adapter.getListViewItemList();
+
+
+                Log.d("Changed: ",newText+backupList.size());
                 //TODO: 필터 관련 소스 Filterable 인터페이스를 Adapter 클래스에 구현하자.
                 // Here is where we are going to implement the filter logic
+
+                if(newText.length() >0)
+                {
+                    adapter.fillter(newText,backupList); // 필터를 통해서 현재 보여주는 값 수정함.
+                    //TODO: 현재 검색이 안될 경우 clear를 통해 초기화 됌. 최종으로 축소되었을때 backup
+                    Log.d("Changed: ",newText+backupList.size());
+                }
+                else{
+
+                }
                 return true;
             }
 
         });
+
+        item.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
+            @Override
+            public boolean onMenuItemActionExpand(MenuItem menuItem) {
+                return true;
+            }
+
+            @Override
+            public boolean onMenuItemActionCollapse(MenuItem menuItem) {
+                adapter.getListViewItemList().clear();
+                adapter.getListViewItemList().addAll(backupList);
+                return true;
+            }
+        });
+
+        super.onCreateOptionsMenu(menu, inflater);
     }
 
 

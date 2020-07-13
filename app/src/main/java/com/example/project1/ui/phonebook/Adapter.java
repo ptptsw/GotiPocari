@@ -11,6 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -20,18 +22,20 @@ import androidx.core.app.ActivityCompat;
 import com.example.project1.R;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import static androidx.core.app.ActivityCompat.requestPermissions;
-
-public class Adapter extends BaseAdapter {
+public class Adapter extends BaseAdapter implements Filterable {
     private ImageView photo;
     private TextView name;
     private TextView number;
     private TextView email;
+
     private ArrayList<JsonData> listViewItemList;
+    //원본 데이터 리스트
+    private ArrayList<JsonData> filteredItemList = new ArrayList<>() ;
+    //필터링된 결과 데이터 리스트. Adapter 생성자에서 전체리스트를 보유하도록 한다.
     private Context context;
     private LayoutInflater layoutInflater;
+    private Filter listFilter;
 
 
     public Adapter() {
@@ -41,6 +45,7 @@ public class Adapter extends BaseAdapter {
     public Adapter(ArrayList<JsonData> itemList, Context context) {
         super();
         this.listViewItemList = itemList == null ? new ArrayList<JsonData>() : itemList;
+
         this.context = context;
         this.layoutInflater = LayoutInflater.from(context);
     }
@@ -48,11 +53,16 @@ public class Adapter extends BaseAdapter {
     public ArrayList<JsonData> getListViewItemList() {
         return listViewItemList;
     }
+    public ArrayList<JsonData> getFilteredItemList() {
+        return filteredItemList;
+    }
+
 
     public void updateItems(ArrayList<JsonData> items) {
         listViewItemList.clear();
         if (items != null)
             listViewItemList.addAll(items);
+            filteredItemList.addAll(items);
         notifyDataSetChanged();
     }
 
@@ -85,6 +95,7 @@ public class Adapter extends BaseAdapter {
         photo = convertView.findViewById(R.id.photo);
 
         JsonData listViewItem = listViewItemList.get(position);
+
 
         name.setText(listViewItem.getName());
         number.setText(listViewItem.getNumber());
@@ -119,5 +130,75 @@ public class Adapter extends BaseAdapter {
             }
         });
         return convertView;
+    }
+
+    @Override
+    public Filter getFilter() {
+        if (listFilter == null) {
+            listFilter = new ListFilter() ;
+        }
+
+        return listFilter ;
+    }
+
+    public void fillter(String searchText, ArrayList<JsonData> backupList){
+
+        listViewItemList.clear();
+        if(searchText.length() == 0)
+        {
+            listViewItemList.addAll(backupList);
+        }
+        else
+        {
+            for( JsonData item : backupList)
+            {
+                if(item.getName().contains(searchText))
+                {
+                    listViewItemList.add(item);
+                }
+            }
+        }
+        notifyDataSetChanged();
+
+    }
+    private class ListFilter extends Filter {
+
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            FilterResults results = new FilterResults() ;
+
+            if (constraint == null || constraint.length() == 0) {
+                results.values = listViewItemList ;
+                results.count = listViewItemList.size() ;
+            } else {
+                ArrayList<JsonData> itemList = new ArrayList<JsonData>() ;
+
+                for (JsonData item : listViewItemList) {
+                    if (item.getName().contains(constraint.toString()))
+                    {
+                        itemList.add(item) ;
+
+                    }
+                }
+
+                results.values = itemList ;
+                results.count = itemList.size() ;
+            }
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+
+            // update listview by filtered data list.
+            filteredItemList = (ArrayList<JsonData>) results.values ;
+
+            // notify
+            if (results.count > 0) {
+                notifyDataSetChanged() ;
+            } else {
+                notifyDataSetInvalidated() ;
+            }
+        }
     }
 }
