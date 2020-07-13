@@ -4,9 +4,13 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.SearchView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,6 +19,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.example.project1.MainActivity;
 import com.example.project1.R;
 
 import java.util.ArrayList;
@@ -49,7 +54,7 @@ public class PhoneBookFragment extends Fragment {
         initializeContacts();
         requestRequiredPermissions();
         phoneBookViewModel.getContacts().observe(getViewLifecycleOwner(), contactObserver);
-
+        setHasOptionsMenu(true); // For option menu
         return root;
     }
 
@@ -83,5 +88,35 @@ public class PhoneBookFragment extends Fragment {
         if (!allGranted)
             requestPermissions(requiredPermissions, PERMISSIONS_REQUEST_ALL);
     }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        menu.clear();
+
+        inflater.inflate(R.menu.top_menu, menu);
+        MenuItem item = menu.findItem(R.id.action_search);
+        item.setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW | MenuItem.SHOW_AS_ACTION_IF_ROOM);
+
+        SearchView searchView = (SearchView) item.getActionView();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                ArrayList<JsonData> tmpList = adapter.getListViewItemList();
+                //TODO: 필터 관련 소스 Filterable 인터페이스를 Adapter 클래스에 구현하자.
+                // Here is where we are going to implement the filter logic
+                return true;
+            }
+
+        });
+    }
+
+
 }
 

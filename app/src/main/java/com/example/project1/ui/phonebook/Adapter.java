@@ -56,17 +56,6 @@ public class Adapter extends BaseAdapter {
         notifyDataSetChanged();
     }
 
-    public void addItem(String name, String number, String email, Uri photo)
-    {
-        JsonData data = new JsonData();
-
-        data.setName(name);
-        data.setNumber(number);
-        data.setEmail(email);
-        data.setPhoto(photo);
-
-        listViewItemList.add(data);
-    }
 
     @Override
     public int getCount() {
