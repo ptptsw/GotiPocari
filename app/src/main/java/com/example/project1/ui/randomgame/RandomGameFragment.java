@@ -1,6 +1,8 @@
 package com.example.project1.ui.randomgame;
 
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,6 +49,7 @@ public class RandomGameFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         recyclerView.setLayoutManager(layoutManager);
+        final AnimationDrawable popAnimation;
 
         try {
             bottlePaths = getActivity().getAssets().list("bottles");
@@ -77,7 +80,20 @@ public class RandomGameFragment extends Fragment {
         });
         recyclerView.setAdapter(mAdapter);
         bottleImageView = root.findViewById(R.id.text_randomgame);
+        bottleImageView.setBackgroundResource(R.drawable.pop_animation);
         button = root.findViewById(R.id.spin_bottle);
+        popAnimation=(AnimationDrawable) bottleImageView.getBackground();
+
+        recyclerView.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View view) {
+                ((AnimationDrawable)(bottleImageView).getBackground()).stop();
+                bottleImageView.setBackgroundDrawable(null);
+                bottleImageView.setBackgroundResource(R.drawable.pop_animation);
+            }
+        });
+
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -100,8 +116,51 @@ public class RandomGameFragment extends Fragment {
                 rotate.setFillAfter(true);
                 animSet.addAnimation(rotate);
                 bottleImageView.startAnimation(animSet);
+
+                final CustomAnimationDrawableNew cad= new CustomAnimationDrawableNew((AnimationDrawable) getResources().getDrawable(R.drawable.pop_animation)) {
+                    @Override
+                    public void onAnimationFinish() {
+                        /*((AnimationDrawable)(bottleImageView).getBackground()).stop();*/
+                        /*bottleImageView.setBackgroundDrawable(null);*/
+                        /*bottleImageView.setBackgroundResource(R.drawable.pop_animation);*/
+                        bottleImageView.setBackgroundResource(R.drawable.pop_14);
+
+                    }
+
+                    @Override
+                    public void onAnimationStart() {
+
+                    }
+                };
+
+
+
+                /*bottleImageView.setBackground(cad);
+                cad.start();*/
+
+
+
+
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        bottleImageView.setBackground(cad);
+                        cad.start();
+
+                    }
+
+                }, 1000);
+
+
+
+
+
+
+
             }
         });
+
 
         return root;
     }

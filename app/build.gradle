@@ -20,6 +20,8 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+
 }
 
 dependencies {
@@ -42,6 +44,7 @@ dependencies {
     implementation "androidx.viewpager2:viewpager2:1.0.0"
     implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation 'com.android.support:recyclerview-v7:27.1.1'
+
 
 
 
