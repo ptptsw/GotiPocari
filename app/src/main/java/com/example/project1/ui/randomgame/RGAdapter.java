@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.project1.R;
 
+
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -26,6 +27,7 @@ public class RGAdapter extends RecyclerView.Adapter<RGAdapter.MyViewHolder> {
         public MyViewHolder(ImageView v) {
             super(v);
             imageView = v;
+
         }
 
         public void bind(final ImageView imageView, final OnItemClickListener listener) {
