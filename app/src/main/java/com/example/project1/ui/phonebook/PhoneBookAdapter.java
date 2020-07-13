@@ -28,7 +28,9 @@ public class PhoneBookAdapter extends RecyclerView.Adapter<PhoneBookAdapter.Phon
         this.listViewItemList = items;
         this.context = context;
     }
-
+    public ArrayList<JsonData> getListViewItemList() {
+        return listViewItemList;
+    }
     public class PhoneBookViewHolder extends RecyclerView.ViewHolder {
         private ImageView photo;
         private TextView name;
@@ -115,5 +117,22 @@ public class PhoneBookAdapter extends RecyclerView.Adapter<PhoneBookAdapter.Phon
         if (items != null)
             listViewItemList.addAll(items);
         notifyDataSetChanged();
+    }
+
+
+    public void fillter(String searchText, ArrayList<JsonData> backupList){
+
+        listViewItemList.clear();
+
+        for( JsonData item : backupList)
+        {
+            if(item.getName().contains(searchText))
+            {
+                listViewItemList.add(item);
+            }
+        }
+
+        notifyDataSetChanged();
+
     }
 }
