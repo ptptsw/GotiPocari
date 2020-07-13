@@ -126,7 +126,7 @@ public class PhoneBookAdapter extends RecyclerView.Adapter<PhoneBookAdapter.Phon
 
         for( JsonData item : backupList)
         {
-            if(item.getName().contains(searchText))
+            if(item.getName().toUpperCase().contains(searchText.toUpperCase()))
             {
                 listViewItemList.add(item);
             }

@@ -43,7 +43,7 @@ public class PhoneBookFragment extends Fragment {
 
     private PhoneBookAdapter adapter;
     private LinearLayoutManager layoutManager;
-    //private Adapter adapter;
+
     private ListView listview;
     private ArrayAdapter searchAdapter;
     private SearchView searchView;
@@ -159,7 +159,7 @@ public class PhoneBookFragment extends Fragment {
             @Override
             public boolean onMenuItemActionExpand(MenuItem menuItem) {
 
-                adapter.getListViewItemList().clear();
+                //adapter.getListViewItemList().clear();
                 return true;
             }
 
