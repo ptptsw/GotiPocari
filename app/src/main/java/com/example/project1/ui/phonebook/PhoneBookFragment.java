@@ -40,7 +40,7 @@ public class PhoneBookFragment extends Fragment {
     private ListView listview;
     private ArrayAdapter searchAdapter;
     private SearchView searchView;
-    private ArrayList<JsonData> backupList;
+    private ArrayList<JsonData> backupList ;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -48,6 +48,7 @@ public class PhoneBookFragment extends Fragment {
         phoneBookViewModel = ViewModelProviders.of(getActivity(), factory).get(PhoneBookViewModel.class);
         View root = inflater.inflate(R.layout.fragment_phonebook, container, false);
         adapter = new Adapter(new ArrayList<JsonData>(), this.getContext());
+        backupList = new ArrayList<>();
        // searchAdapter = new ArrayAdapter(root.getContext(), R.layout.fragment_phonebook);
 
         final Observer<ArrayList<JsonData>> contactObserver = new Observer<ArrayList<JsonData>>() {
@@ -84,6 +85,7 @@ public class PhoneBookFragment extends Fragment {
                 phoneBookViewModel.initializeContacts();
             else
                 adapter.updateItems(phoneBookViewModel.getContacts().getValue());
+                backupList.addAll(phoneBookViewModel.getContacts().getValue());
         }
     }
 
@@ -100,8 +102,8 @@ public class PhoneBookFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        backupList = new ArrayList<>();
-        backupList.addAll(adapter.getFilteredItemList());
+
+        adapter.notifyDataSetChanged();
         inflater.inflate(R.menu.top_menu, menu);
         MenuItem item = menu.findItem(R.id.action_search);
         item.setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW | MenuItem.SHOW_AS_ACTION_IF_ROOM);
@@ -142,6 +144,8 @@ public class PhoneBookFragment extends Fragment {
         item.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
             @Override
             public boolean onMenuItemActionExpand(MenuItem menuItem) {
+
+                adapter.getListViewItemList().clear();
                 return true;
             }
 
@@ -149,6 +153,8 @@ public class PhoneBookFragment extends Fragment {
             public boolean onMenuItemActionCollapse(MenuItem menuItem) {
                 adapter.getListViewItemList().clear();
                 adapter.getListViewItemList().addAll(backupList);
+                adapter.notifyDataSetChanged();
+
                 return true;
             }
         });

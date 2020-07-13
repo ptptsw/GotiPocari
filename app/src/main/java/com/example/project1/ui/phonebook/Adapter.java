@@ -144,20 +144,15 @@ public class Adapter extends BaseAdapter implements Filterable {
     public void fillter(String searchText, ArrayList<JsonData> backupList){
 
         listViewItemList.clear();
-        if(searchText.length() == 0)
+
+        for( JsonData item : backupList)
         {
-            listViewItemList.addAll(backupList);
-        }
-        else
-        {
-            for( JsonData item : backupList)
+            if(item.getName().contains(searchText))
             {
-                if(item.getName().contains(searchText))
-                {
-                    listViewItemList.add(item);
-                }
+                listViewItemList.add(item);
             }
         }
+
         notifyDataSetChanged();
 
     }
