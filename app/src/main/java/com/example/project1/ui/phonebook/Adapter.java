@@ -29,10 +29,11 @@ public class Adapter extends BaseAdapter {
     private TextView name;
     private TextView number;
     private TextView email;
+    private ImageButton callButton;
+    private ImageButton smsButton;
     private ArrayList<JsonData> listViewItemList;
     private Context context;
     private LayoutInflater layoutInflater;
-
 
     public Adapter() {
         listViewItemList = new ArrayList<JsonData>();
@@ -104,7 +105,7 @@ public class Adapter extends BaseAdapter {
         if (photo.getDrawable() == null)
             photo.setImageResource(R.drawable.ic_profile_placeholder);
 
-        ImageButton callButton= (ImageButton)convertView.findViewById(R.id.callButton);
+        callButton = (ImageButton)convertView.findViewById(R.id.call_button);
         callButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if (ActivityCompat.checkSelfPermission(Adapter.this.context, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED)
@@ -117,7 +118,7 @@ public class Adapter extends BaseAdapter {
             }
         });
 
-        ImageButton smsButton = (ImageButton)convertView.findViewById(R.id.smsButton);
+        smsButton = (ImageButton)convertView.findViewById(R.id.sms_button);
         smsButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if (ActivityCompat.checkSelfPermission(Adapter.this.context, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED)
