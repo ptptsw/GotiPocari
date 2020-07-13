@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,6 +13,8 @@ import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.project1.R;
 
@@ -30,22 +31,26 @@ public class PhoneBookFragment extends Fragment {
             Manifest.permission.CALL_PHONE
     };
     private PhoneBookViewModel phoneBookViewModel;
-    private Adapter adapter;
+    private PhoneBookAdapter adapter;
+    private LinearLayoutManager layoutManager;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         PhoneBookViewModelFactory factory = new PhoneBookViewModelFactory(this.getContext());
         phoneBookViewModel = ViewModelProviders.of(getActivity(), factory).get(PhoneBookViewModel.class);
         View root = inflater.inflate(R.layout.fragment_phonebook, container, false);
-        adapter = new Adapter(new ArrayList<JsonData>(), this.getContext());
+        adapter = new PhoneBookAdapter(new ArrayList<JsonData>(), getContext());
         final Observer<ArrayList<JsonData>> contactObserver = new Observer<ArrayList<JsonData>>() {
             @Override
             public void onChanged(@Nullable final ArrayList<JsonData> newContacts) {
                 adapter.updateItems(newContacts);
             }
         };
-        ListView listview = root.findViewById(R.id.listView);
-        listview.setAdapter(adapter);
+        RecyclerView recyclerView = root.findViewById(R.id.pb_recycler_view);
+        recyclerView.setAdapter(adapter);
+        layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setHasFixedSize(true);
         initializeContacts();
         requestRequiredPermissions();
         phoneBookViewModel.getContacts().observe(getViewLifecycleOwner(), contactObserver);

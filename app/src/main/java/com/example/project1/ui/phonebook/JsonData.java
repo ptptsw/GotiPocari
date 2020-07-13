@@ -10,6 +10,7 @@ public class JsonData {
     private String number;
     private String email;
     private Uri photo;
+    private boolean expanded;
 
     public JsonData() { }
 
@@ -50,5 +51,13 @@ public class JsonData {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public boolean getExpanded() {
+        return this.expanded;
+    }
+
+    public void setExpanded(boolean expanded) {
+        this.expanded = expanded;
     }
 }
