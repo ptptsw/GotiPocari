@@ -65,6 +65,8 @@ public class Dial extends Fragment implements  View.OnClickListener{
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.backspace) {
+            if (count.equals(""))
+                return;
             count = count.substring(0, count.length() - 1);
         } else if (v.getId() == R.id.btext) {
             if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED)
