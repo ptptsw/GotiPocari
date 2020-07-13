@@ -12,23 +12,20 @@ import androidx.fragment.app.Fragment;
 
 import com.example.project1.R;
 
-
+//처음 gallery 화면 - grid view
 public class PicturesFragment extends Fragment {
 
     private PicturesViewModel picturesViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        /*picturesViewModel =ViewModelProviders.of(this).get(PicturesViewModel.class);*/
+
+        //gird view 생성
         View root = inflater.inflate(R.layout.fragment_pictures, container, false);
         GridView gridView = (GridView) root.findViewById(R.id.grid_view);
         gridView.setAdapter(new picturesAdapter(getActivity()));
-        /*picturesViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });*/
+
+        //grid view의 picture click 했을 때, 사진의 position 값 받아서 FullImageActivity에 전달, 실행
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {

@@ -10,7 +10,7 @@ import android.widget.ImageView;
 
 import com.example.project1.R;
 
-
+//picture fragment의 adapter
 public class picturesAdapter extends BaseAdapter {
     private Context mContext;
 
@@ -58,15 +58,14 @@ public class picturesAdapter extends BaseAdapter {
         return 0;
     }
 
+
+    //imageview 생성한다음 gridview layout에 적용
     @Override
     public View getView(int i, View convertview, ViewGroup parent) {
         ImageView imageView=new ImageView(mContext);
         imageView.setImageResource(Thumbs[i]);
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
         imageView.setLayoutParams(new GridView.LayoutParams(350,350));
-
-
-
 
         return imageView;
 
