@@ -131,6 +131,7 @@ public class PhoneBookFragment extends Fragment {
                 //adapter.fillter(query);
                 Log.d("submitted: ",query);
                 return false;
+
             }
 
             @Override

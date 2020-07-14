@@ -11,6 +11,7 @@ import android.os.Build;
 import android.os.Looper;
 import android.os.Handler;
 import android.provider.Settings;
+
 import android.view.Gravity;
 import android.widget.Toast;
 
