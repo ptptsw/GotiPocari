@@ -34,16 +34,17 @@ import java.lang.ref.WeakReference;
 
 public class ARGameFragment extends Fragment {
     private static final int RC_PERMISSIONS = 1;
+    private static LinearLayout.LayoutParams lp;
     private ArSceneView arSceneView;
-    protected ModelRenderable bottleRenderable;
     private GestureDetector gestureDetector;
-    protected boolean loadingComplete;
-    protected boolean bottlePlaced;
     private boolean cameraPermissionRequested;
-    protected RotatingNode wineBottle;
     private AnchorNode anchorNode;
     private ModelLoader modelLoader;
-    private static LinearLayout.LayoutParams lp;
+    private ImageView selectedImageView;
+    protected boolean bottlePlaced;
+    protected boolean loadingComplete;
+    protected ModelRenderable bottleRenderable;
+    protected RotatingNode wineBottle;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_argame, container, false);
@@ -112,6 +113,9 @@ public class ARGameFragment extends Fragment {
         gallery.addView(cola);
         gallery.addView(mangmang);
         gallery.addView(knife);
+
+        selectedImageView = champagne;
+        selectedImageView.setBackgroundResource(R.drawable.imageview_border);
     }
 
     private ImageView generateImageViewFromResource(int thumbnailResourceID, int modelResourceID) {
@@ -123,6 +127,10 @@ public class ARGameFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 ARGameFragment.this.loadModel(modelResourceID);
+
+                selectedImageView.setBackgroundResource(0);
+                imageView.setBackgroundResource(R.drawable.imageview_border);
+                selectedImageView = imageView;
             }
         });
 
