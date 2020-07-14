@@ -7,4 +7,8 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="ScreenSlideTabText">
+        <item name="android:textSize">12sp</item>
+    </style>
+
 </resources>

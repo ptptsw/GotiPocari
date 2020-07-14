@@ -20,10 +20,5 @@
         android:id="@+id/navigation_randomgame"
         android:icon="@drawable/ic_videogame_asset_black_24dp"
         android:title="@string/title_randomgame" />
-
-    <item
-        android:id="@+id/navigation_argame"
-        android:icon="@drawable/ic_videogame_asset_black_24dp"
-        android:title="@string/title_argame" />
 </menu>
 
