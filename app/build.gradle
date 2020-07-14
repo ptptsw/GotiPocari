@@ -61,3 +61,31 @@ sceneform.asset(
         'sampledata/models/champagne.sfa',
         'src/main/res/raw/champagne'
 )
+
+sceneform.asset(
+        'sampledata/models/soju.obj',
+        'default',
+        'sampledata/models/soju.sfa',
+        'src/main/res/raw/soju'
+)
+
+sceneform.asset(
+        'sampledata/models/cola.obj',
+        'default',
+        'sampledata/models/cola.sfa',
+        'src/main/res/raw/cola'
+)
+
+sceneform.asset(
+        'sampledata/models/mangmang.obj',
+        'default',
+        'sampledata/models/mangmang.sfa',
+        'src/main/res/raw/mangmang'
+)
+
+sceneform.asset(
+        'sampledata/models/knife.obj',
+        'default',
+        'sampledata/models/knife.sfa',
+        'src/main/res/raw/knife'
+)
