@@ -179,7 +179,7 @@ public void fillter(String searchText, ArrayList<JsonData> backupList){
     }
 ```
 
-ContactRepository - getContactList()
+* ContactRepository - getContactList() 
 
 ```
  public ArrayList<JsonData> getContactList() {
