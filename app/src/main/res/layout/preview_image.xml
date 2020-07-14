@@ -9,6 +9,7 @@
     <ImageView
         android:id="@+id/preview_item"
         android:layout_width="100dp"
-        android:layout_height="100dp" />
+        android:layout_height="100dp"
+        android:adjustViewBounds="true"/>
 
 </LinearLayout>

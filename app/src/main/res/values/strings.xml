@@ -1,4 +1,5 @@
 <resources>
+
     <string name="app_name">Gotipocari</string>
     <string name="title_phonebook">전화번호부</string>
     <string name="title_dashboard">갤러리</string>
@@ -8,4 +9,5 @@
     <string name="title_argame">AR Game</string>
     <string name="randgame_button_text">Spin!</string>
     <string name="action_search">검색</string>
+
 </resources>

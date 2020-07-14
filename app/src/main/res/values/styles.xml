@@ -17,6 +17,10 @@
     </style>
     <style name="ActionBarTextColor" parent="android:TextAppearance.Holo.Widget.ActionBar.Title">
         <item name="android:textColor">#000000</item>
+
+    <style name="ScreenSlideTabText">
+        <item name="android:textSize">12sp</item>
+
     </style>
 
 </resources>
