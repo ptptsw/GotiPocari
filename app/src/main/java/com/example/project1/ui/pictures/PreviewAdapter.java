@@ -1,24 +1,16 @@
 package com.example.project1.ui.pictures;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.project1.R;
-import com.example.project1.ui.randomgame.RGAdapter;
-
-import java.util.List;
-
-import static android.graphics.Color.*;
 
 public class PreviewAdapter extends RecyclerView.Adapter<PreviewAdapter.ViewHolder> {
 
