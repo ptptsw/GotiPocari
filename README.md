@@ -30,7 +30,7 @@ Android project for week 1 of Madcamp@KAIST
 **1)기능**
 
    ![main](https://github.com/geonsikSeo/GotiPocari_Project1/blob/master/imageformd/main.png)
-  
+
    * 각 Button 클릭시 해당 숫자를 coout라는 변수에 string으로 변환하고, setText함수를 통해 입력된 문자열을 TextView에 출력합니다.
 
    또한 CallButton과 SmsButton에 대한 OnClickListener를 구현했으며, Call 버튼 클릭시 권한이 허용되었는지 검사하고 Intent를 통해(Intent.Action_View)
@@ -71,7 +71,7 @@ Android project for week 1 of Madcamp@KAIST
 
 
 
-# PhoneBook Fragment 구현 사항 
+# PhoneBook Fragment 구현 사항
 
 **1)기능**
 
@@ -97,7 +97,7 @@ Intent로 넘겨 직접 전화와 메세지를 실행할 수 있습니다.
 ![phonebook](https://github.com/geonsikSeo/GotiPocari_Project1/blob/master/imageformd/Phonebook1.png)
 
 또한 Adapter에 Filter()함수를 구현하였습니다. 이는 Action bar에 구현한 SearchView를 통해 검색어를 substring으로 가지는 목록을
-검색해 가져오기 위한 함수입니다. 
+검색해 가져오기 위한 함수입니다.
 
 SearchView는 OnCreateOptionMenu()함수를 Override하여 Action bar에 띄웠고, searchView에 이벤트 처리를 위해
 setOnQueryTextListener를 통해 onQueryTextChange(글자가 입력중일 때)에서 Fliter 함수를 호출하였습니다.
@@ -179,7 +179,7 @@ public void fillter(String searchText, ArrayList<JsonData> backupList){
     }
 ```
 
-* ContactRepository - getContactList() 
+* ContactRepository - getContactList()
 
 ```
  public ArrayList<JsonData> getContactList() {
@@ -207,20 +207,24 @@ public void fillter(String searchText, ArrayList<JsonData> backupList){
     }
 ```
 
+# Gallery 구현사항
 
-# Gallery
+**1)기능**
+  
+*  여러개의 이미지를 3개의 열로 표시
+*  클릭하면 이미지를 확대해서 보여주는 기능
+*  이미지 밑에 프리뷰 구현
+  
+여러개의 이미지를 보여주는 Pictures는 GridView를 사용했으며, 각 이미지를 클릭하면 FullImageActivity로 이동해 확대된 사진이 보입니다. 
+    
+FUllImageActivity는 Viewpager과 RecyclerView로 이루어져 있고, Viewpager에는 확대된 이미지, RecyclerView에서는 Preview 이미지가 보입니다. 
+    
+Viewpager를 이용해 슬라이드 모션을 취하면 다음 이미지로 넘어가고, Preview Image에서 클릭하면 그에 해당하는 Image가 Viewpager에 나타나도록 구현했습니다.
+    
+fragment간의 정보는 getAdapterPosition()을 이용해 주고 받았고, fragment에서 Activity로 넘어갈때는 Intent 함수를 이용해 정보를 전달했습니다. 
+    
+**2)구현코드**
+    
 
 
 # RandomGame
-
-
-
-
-
-
-
-
-
-
-
-   
