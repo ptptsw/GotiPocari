@@ -32,12 +32,13 @@ import com.google.ar.sceneform.rendering.ModelRenderable;
 public class ARGameFragment extends Fragment {
     private static final int RC_PERMISSIONS = 1;
     private ArSceneView arSceneView;
-    private ModelRenderable bottleRenderable;
+    protected ModelRenderable bottleRenderable;
     private GestureDetector gestureDetector;
-    private boolean loadingComplete;
-    private boolean bottlePlaced;
+    protected boolean loadingComplete;
+    protected boolean bottlePlaced;
     private boolean cameraPermissionRequested;
-    private RotatingNode wineBottle;
+    protected RotatingNode wineBottle;
+    private AnchorNode anchorNode;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_argame, container, false);
@@ -120,7 +121,7 @@ public class ARGameFragment extends Fragment {
 
                 if (trackable instanceof Plane && ((Plane)trackable).isPoseInPolygon(hit.getHitPose())) {
                     Anchor anchor = hit.createAnchor();
-                    AnchorNode anchorNode = new AnchorNode(anchor);
+                    anchorNode = new AnchorNode(anchor);
                     anchorNode.setParent(arSceneView.getScene());
                     wineBottle = new RotatingNode();
                     wineBottle.setRenderable(bottleRenderable);
