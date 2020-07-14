@@ -29,7 +29,15 @@ Android project for week 1 of Madcamp@KAIST
 
 **1)기능**
 
-ㅇㅇㅇㄻㄹㅈㄷㄹㅈㄷㄹ
+   ![main](https://github.com/geonsikSeo/GotiPocari_Project1/blob/master/imageformd/main.png)
+  
+   *각 Button 클릭시 해당 숫자를 coout라는 변수에 string으로 변환하고, setText함수를 통해 입력된 문자열을 TextView에 출력합니다.
+
+   또한 CallButton과 SmsButton에 대한 OnClickListener를 구현했으며, Call 버튼 클릭시 권한이 허용되었는지 검사하고 Intent를 통해(Intent.Action_View)
+
+   count에 저장된 전화번호로 전화를 걸 수 있습니다. sms또한 권한 허용 여부 검사 후, 해당 번호로 문자를 보낼 수 있습니다.
+
+   권한 검사는 checkSelfPermission()함수를 통해서 진행합니다.
 
 **2) 구현 코드**
 
