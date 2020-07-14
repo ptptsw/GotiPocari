@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -28,6 +30,7 @@ import com.google.ar.sceneform.HitTestResult;
 import com.google.ar.sceneform.Scene;
 import com.google.ar.sceneform.rendering.ModelRenderable;
 
+import java.lang.ref.WeakReference;
 
 public class ARGameFragment extends Fragment {
     private static final int RC_PERMISSIONS = 1;
@@ -39,6 +42,8 @@ public class ARGameFragment extends Fragment {
     private boolean cameraPermissionRequested;
     protected RotatingNode wineBottle;
     private AnchorNode anchorNode;
+    private ModelLoader modelLoader;
+    private static LinearLayout.LayoutParams lp;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_argame, container, false);
@@ -46,26 +51,14 @@ public class ARGameFragment extends Fragment {
         if (!PermissionUtils.checkIsSupportedDeviceOrFinish(this.getActivity()))
             return root;
 
+        lp = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT
+        );
+        lp.setMargins(100, 0, 0, 0);
         arSceneView = root.findViewById(R.id.ar_scene_view);
-        ModelRenderable.builder().setSource(this.getContext(), R.raw.champagne)
-                .build()
-                .thenAccept(new Consumer<ModelRenderable>() {
-                    @Override
-                    public void accept(ModelRenderable modelRenderable) {
-                        ARGameFragment.this.bottleRenderable = modelRenderable;
-                        ARGameFragment.this.loadingComplete = true;
-                    }
-                })
-                .exceptionally(new Function<Throwable, Void>() {
-                    @Override
-                    public Void apply(Throwable throwable) {
-                        Toast toast = Toast.makeText(ARGameFragment.this.getContext(), "Unable to load renderable", Toast.LENGTH_LONG);
-                        toast.setGravity(Gravity.CENTER, 0, 0);
-                        toast.show();
-                        return null;
-                    }
-                });
-
+        modelLoader = new ModelLoader(new WeakReference<>(this));
+        modelLoader.loadModel(R.raw.champagne);
+        initializeGallery(root);
         gestureDetector = new GestureDetector(this.getContext(), new GestureDetector.SimpleOnGestureListener() {
             @Override
             public boolean onSingleTapUp(MotionEvent e) {
@@ -84,6 +77,7 @@ public class ARGameFragment extends Fragment {
             public boolean onSceneTouch(HitTestResult hitTestResult, MotionEvent motionEvent) {
                 if (!bottlePlaced)
                     return gestureDetector.onTouchEvent(motionEvent);
+
                 return false;
             }
         });
@@ -104,6 +98,41 @@ public class ARGameFragment extends Fragment {
         return root;
     }
 
+    private void initializeGallery(View root) {
+        LinearLayout gallery = root.findViewById(R.id.ar_gallery);
+
+        ImageView champagne = generateImageViewFromResource(R.drawable.thumbnail_champagne, R.raw.champagne);
+        ImageView soju = generateImageViewFromResource(R.drawable.thumbnail_soju, R.raw.soju);
+        ImageView cola = generateImageViewFromResource(R.drawable.thumbnail_cola, R.raw.cola);
+        ImageView mangmang = generateImageViewFromResource(R.drawable.thumbnail_mangmang, R.raw.mangmang);
+        ImageView knife = generateImageViewFromResource(R.drawable.thumbnail_knife, R.raw.knife);
+
+        gallery.addView(champagne);
+        gallery.addView(soju);
+        gallery.addView(cola);
+        gallery.addView(mangmang);
+        gallery.addView(knife);
+    }
+
+    private ImageView generateImageViewFromResource(int thumbnailResourceID, int modelResourceID) {
+        ImageView imageView = new ImageView(this.getContext());
+        imageView.setImageResource(thumbnailResourceID);
+        imageView.setAdjustViewBounds(true);
+        imageView.setLayoutParams(lp);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ARGameFragment.this.loadModel(modelResourceID);
+            }
+        });
+
+        return imageView;
+    }
+
+    private void loadModel(int resourceId) {
+        modelLoader.loadModel(resourceId);
+    }
+
     private void onSingleTap(MotionEvent e) {
         if (!loadingComplete)
             return;
@@ -112,6 +141,7 @@ public class ARGameFragment extends Fragment {
 
         if (frame != null && !bottlePlaced && placeBottleSuccessful(e, frame))
             bottlePlaced = true;
+
     }
 
     private boolean placeBottleSuccessful(MotionEvent tap, Frame frame) {
@@ -131,6 +161,10 @@ public class ARGameFragment extends Fragment {
             }
         }
         return false;
+    }
+
+    public void onException(Throwable throwable) {
+        Toast.makeText(this.getActivity(), throwable.getMessage(), Toast.LENGTH_LONG).show();
     }
 
     @Override
