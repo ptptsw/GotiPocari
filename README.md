@@ -1,2 +1,72 @@
 # Madcamp - GotiPocari
 Android project for week 1 of Madcamp@KAIST
+
+
+# GotiPocari Application의 구성
+**1. Activity (2개)**
+   * MainActivity
+   * LoadingActivity
+
+**2. Fragment (4개)**
+   * Dial Fragment
+   * PhoneBook Fragment
+   * Gallery Fragment
+   * RandomGame Fragment - (In App version / AR version)
+
+**3. Control Flow**
+   * Application 구동 시 MainActivity에서 LoadingActivity를 일정시간 실행시켜 로딩화면을 실행합니다.
+   ![Loading](https://github.com/geonsikSeo/GotiPocari_Project1/blob/master/imageformd/loadingimage.png)
+
+
+   * LoadingActivity의 startLoading() 함수에서 시간이 종료되면 MainActivity에서 activity_main.xml을 실행합니다.
+   ![main](https://github.com/geonsikSeo/GotiPocari_Project1/blob/master/imageformd/main.png)
+
+   * Navigation Bar를 Tap하여 위 2. Fragment에서 설명한 각 Fragment로 이동이 가능합니다.
+
+
+
+# Dial Fragment 구현 사항
+
+    1) 기능
+
+       ![main](https://github.com/geonsikSeo/GotiPocari_Project1/blob/master/imageformd/main.png)
+
+       각 Button 클릭시 해당 숫자를 coout라는 변수에 string으로 변환하고, setText함수를 통해 입력된 문자열을 TextView에 출력합니다.
+       또한 CallButton과 SmsButton에 대한 OnClickListener를 구현했으며, Call 버튼 클릭시 권한이 허용되었는지 검사하고 Intent를 통해(Intent.Action_View)
+       count에 저장된 전화번호로 전화를 걸 수 있습니다. sms또한 권한 허용 여부 검사 후, 해당 번호로 문자를 보낼 수 있습니다.
+       권한 검사는 checkSelfPermission()함수를 통해서 진행합니다.
+
+   **2) 구현 코드**
+```
+ @Override
+    public void onClick(View v) {
+        if (v.getId() == R.id.backspace) {
+            if (count.equals(""))
+                return;
+            count = count.substring(0, count.length() - 1);
+        } else if (v.getId() == R.id.btext) {
+            if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED)
+                ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.SEND_SMS}, PERMISSIONS_REQUEST_SEND_SMS);
+            else {
+                Intent text = new Intent(Intent.ACTION_VIEW, Uri.parse("sms:" + count));
+                startActivity(text);
+            }
+        } else if (v.getId() == R.id.bcall) {
+            if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED)
+                ActivityCompat.requestPermissions(getActivity(), new String[]{ Manifest.permission.CALL_PHONE }, PERMISSIONS_CALL_PHONE);
+            else {
+                Intent call = new Intent(Intent.ACTION_CALL, Uri.parse("tel:"+count));
+                startActivity(call);
+            }
+        } else {
+            count += Integer.toString(v.getId() - R.id.b0);
+        }
+        text.setText(count);
+    }
+```
+
+
+
+# PhoneBook Fragment 구현 사항 
+
+   
