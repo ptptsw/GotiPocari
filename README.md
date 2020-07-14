@@ -231,9 +231,9 @@ fragment간의 정보는 getAdapterPosition()을 이용해 주고 받았고, fra
 
 해당 Fragment에는 두 가지 종류(2D, AR)의 병 돌리기 게임이 있습니다. Swipe 또는 상단에 있는 Tab으로 두 Fragment간 이동이 가능합니다.
 
-| 병 돌리기 게임 - 2D 버전 | 병 돌리기 게임 - AR 버전 |
-|---------------------|----------------------|
-|![Bottle Spin 2D Version](https://imgur.com/XOEYxnq)|![Bottle Spin AR Version](https://imgur.com/JChGl1C)|
+| 병 돌리기 게임 - 2D 버전                             | 병 돌리기 게임 - AR 버전                             |
+|------------------------------------------------------|------------------------------------------------------|
+| ![Bottle Spin 2D Version](https://i.imgur.com/XOEYxnq.jpg) | ![Bottle Spin AR Version](https://i.imgur.com/JChGl1C.jpg) |
 
 ### 병 돌리기 게임 - 2D 버전
 
