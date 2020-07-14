@@ -1,9 +1,7 @@
 package com.example.project1.ui.argame;
 
-import android.gesture.Gesture;
 import android.os.Bundle;
 import android.view.GestureDetector;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -30,9 +28,6 @@ import com.google.ar.sceneform.HitTestResult;
 import com.google.ar.sceneform.Scene;
 import com.google.ar.sceneform.rendering.ModelRenderable;
 
-import java.security.Permission;
-import java.util.function.Consumer;
-import java.util.function.Function;
 
 public class ARGameFragment extends Fragment {
     private static final int RC_PERMISSIONS = 1;
