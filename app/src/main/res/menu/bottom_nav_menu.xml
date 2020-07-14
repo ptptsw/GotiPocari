@@ -33,14 +33,6 @@
         app:itemIconTint="@color/colorAccent"
         app:itemTextColor="@color/colorPrimaryDark" />
 
-    <item
-        android:id="@+id/navigation_argame"
-        android:fontFamily="@font/font"
-        android:icon="@drawable/ic_videogame_asset_black_24dp"
-        android:title="@string/title_argame"
-        app:itemIconTint="@color/colorPrimaryDark"
-        app:itemTextColor="@color/colorPrimaryDark" />
-
 
 </menu>
 
