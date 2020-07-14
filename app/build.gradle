@@ -61,3 +61,10 @@ sceneform.asset(
         'sampledata/models/champagne.sfa',
         'src/main/res/raw/champagne'
 )
+
+sceneform.asset(
+        'sampledata/models/soju.obj',
+        'default',
+        'sampledata/models/soju.sfa',
+        'src/main/res/raw/soju'
+)
