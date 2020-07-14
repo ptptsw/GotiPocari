@@ -41,7 +41,7 @@ Android project for week 1 of Madcamp@KAIST
 
 **2) 구현 코드**
 
-```
+```java
  @Override
     public void onClick(View v) {
         if (v.getId() == R.id.backspace) {
@@ -121,7 +121,7 @@ setOnQueryTextListener를 통해 onQueryTextChange(글자가 입력중일 때)�
 
 * PhoneBookAdapter - Bind 함수
 
-```
+```java
   public void bind(final JsonData item) {
             boolean expanded = item.getExpanded();
 
@@ -161,7 +161,7 @@ setOnQueryTextListener를 통해 onQueryTextChange(글자가 입력중일 때)�
 
 * PhoneBookAdapter - fillter 함수
 
-```
+```java
 public void fillter(String searchText, ArrayList<JsonData> backupList){
 
         listViewItemList.clear();
@@ -181,7 +181,7 @@ public void fillter(String searchText, ArrayList<JsonData> backupList){
 
 * ContactRepository - getContactList()
 
-```
+```java
  public ArrayList<JsonData> getContactList() {
         ContentResolver cr = context.getContentResolver();
         Cursor cur = cr.query(ContactsContract.Contacts.CONTENT_URI, null, null, null, null);
@@ -210,21 +210,47 @@ public void fillter(String searchText, ArrayList<JsonData> backupList){
 # Gallery 구현사항
 
 **1)기능**
-  
+
 *  여러개의 이미지를 3개의 열로 표시
 *  클릭하면 이미지를 확대해서 보여주는 기능
 *  이미지 밑에 프리뷰 구현
-  
-여러개의 이미지를 보여주는 Pictures는 GridView를 사용했으며, 각 이미지를 클릭하면 FullImageActivity로 이동해 확대된 사진이 보입니다. 
-    
-FUllImageActivity는 Viewpager과 RecyclerView로 이루어져 있고, Viewpager에는 확대된 이미지, RecyclerView에서는 Preview 이미지가 보입니다. 
-    
-Viewpager를 이용해 슬라이드 모션을 취하면 다음 이미지로 넘어가고, Preview Image에서 클릭하면 그에 해당하는 Image가 Viewpager에 나타나도록 구현했습니다.
-    
-fragment간의 정보는 getAdapterPosition()을 이용해 주고 받았고, fragment에서 Activity로 넘어갈때는 Intent 함수를 이용해 정보를 전달했습니다. 
-    
-**2)구현코드**
-    
 
+여러개의 이미지를 보여주는 Pictures는 GridView를 사용했으며, 각 이미지를 클릭하면 FullImageActivity로 이동해 확대된 사진이 보입니다.
+
+FUllImageActivity는 Viewpager과 RecyclerView로 이루어져 있고, Viewpager에는 확대된 이미지, RecyclerView에서는 Preview 이미지가 보입니다.
+
+Viewpager를 이용해 슬라이드 모션을 취하면 다음 이미지로 넘어가고, Preview Image에서 클릭하면 그에 해당하는 Image가 Viewpager에 나타나도록 구현했습니다.
+
+fragment간의 정보는 getAdapterPosition()을 이용해 주고 받았고, fragment에서 Activity로 넘어갈때는 Intent 함수를 이용해 정보를 전달했습니다.
+
+**2)구현코드**
 
 # RandomGame
+
+마지막 탭에서는 [병 돌리기 게임](https://en.wikipedia.org/wiki/Spin_the_bottle)을 구현하였습니다.
+
+해당 Fragment에는 두 가지 종류(2D, AR)의 병 돌리기 게임이 있습니다. Swipe 또는 상단에 있는 Tab으로 두 Fragment간 이동이 가능합니다.
+
+| 병 돌리기 게임 - 2D 버전 | 병 돌리기 게임 - AR 버전 |
+|---------------------|----------------------|
+|![Bottle Spin 2D Version](https://imgur.com/XOEYxnq)|![Bottle Spin AR Version](https://imgur.com/JChGl1C)|
+
+### 병 돌리기 게임 - 2D 버전
+
+2D 버전의 병 돌리기 게임은 버튼을 누를 시 선택된 병이 회전되면서 임의의 각도에서 멈추게 됩니다. `ImageView`를 회전함으로써 구현하였으며, 회전은 `android.view.animation` 패키지에 포함된 클래스를 사용해 만들었습니다. 특히 `android.view.animation.AnticipateOvershootInterpolator` 객체의 필드 값을 알맞게 조절하여 실제로 병이 돌아가는 모습과 유사하게 구현하였습니다.
+
+세 가지 종류의 병을 선택할 수 있으며, 현실감을 더하기 위해 배경에 액체가 튀는 애니메이션을 추가하기도 하였습니다.
+
+### 병 돌리기 게임 - AR 버전
+
+AR 버전의 병 돌리기 게임은 카메라를 통해 평면이 인식되는 경우, 해당 평면에 선택된 모델을 올린 뒤 2D 버전과 동일하게 모델을 회전시켜 임의의 각도에서 멈추게 합니다. 주된 기능은 `com.google.ar:core`과 `com.google.ar.sceneform:core` 패키지를 이용해 구현하였습니다. 여러 가지 병을 비롯해 귀여운 고양이와 무서운 칼을 올려 회전시킬 수도 있습니다.
+
+# Attribution
+
+다음은 해당 프로젝트에 사용된 3D 모델들입니다
+
+- [Bottle of Champagne](https://poly.google.com/view/fCWg2Z6OSku) by [Poly by Google](https://poly.google.com/user/4aEd8rQgKu2) is licensed under [CC-BY](https://creativecommons.org/licenses/by/3.0/legalcode)
+- [Soju](https://poly.google.com/view/0FJq5yTfjg5) by [Jimi Youm](https://poly.google.com/user/fPd6c2uDY_w) is licensed under [CC-BY](https://creativecommons.org/licenses/by/3.0/legalcode)
+- [Knife](https://poly.google.com/view/0X5xcxjszwI) by [Poly by Google](https://poly.google.com/user/4aEd8rQgKu2) is licensed under [CC-BY](https://creativecommons.org/licenses/by/3.0/legalcode)
+- [Cat](https://poly.google.com/view/6dM1J6f6pm9) by [Poly by Google](https://poly.google.com/user/4aEd8rQgKu2) is licensed under [CC-BY](https://creativecommons.org/licenses/by/3.0/legalcode)
+- [Soda](https://poly.google.com/view/2w4Av7jJ2_B) by [Poly by Google](https://poly.google.com/user/4aEd8rQgKu2) is licensed under [CC-BY](https://creativecommons.org/licenses/by/3.0/legalcode)
