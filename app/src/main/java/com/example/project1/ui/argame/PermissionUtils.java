@@ -48,7 +48,7 @@ public class PermissionUtils {
                 });
     }
 
-    public static boolean requestCameraPermission(Activity activity, int requestCode) {
+    public static void requestCameraPermission(Activity activity, int requestCode) {
         ActivityCompat.requestPermissions(activity, new String[]{ Manifest.permission.CAMERA }, requestCode);
     }
 
