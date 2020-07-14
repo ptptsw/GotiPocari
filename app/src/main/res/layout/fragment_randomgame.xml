@@ -43,7 +43,8 @@
         android:backgroundTint="@color/colorPrimary"
         android:text="@string/randgame_button_text"
         android:textColor="@android:color/white"
-        android:textSize="26sp"
-        />
+        android:textSize="26sp" />
+
+
 
 </android.widget.LinearLayout>

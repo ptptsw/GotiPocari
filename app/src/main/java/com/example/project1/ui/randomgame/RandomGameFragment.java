@@ -78,6 +78,7 @@ public class RandomGameFragment extends Fragment {
                 bottleImageView.setImageResource(bottleMap.get(filename));
             }
         });
+        recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(mAdapter);
         bottleImageView = root.findViewById(R.id.text_randomgame);
         bottleImageView.setBackgroundResource(R.drawable.pop_animation);
