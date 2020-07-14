@@ -22,9 +22,16 @@
         android:name="com.example.project1.ui.randomgame.RandomGameFragment"
         android:label="@string/title_randomgame"
         tools:layout="@layout/fragment_randomgame" />
+
     <fragment
         android:id="@+id/navigation_dial"
         android:name="com.example.project1.ui.Dial.Dial"
         android:label="@string/title_dial"
         tools:layout="@layout/fragment_dial" />
+
+    <fragment
+        android:id="@+id/navigation_argame"
+        android:name="com.example.project1.ui.argame.ARGameFragment"
+        android:label="@string/title_argame"
+        tools:layout="@layout/fragment_argame" />
 </navigation>
