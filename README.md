@@ -223,6 +223,11 @@ Viewpager를 이용해 슬라이드 모션을 취하면 다음 이미지로 넘�
 
 fragment간의 정보는 getAdapterPosition()을 이용해 주고 받았고, fragment에서 Activity로 넘어갈때는 Intent 함수를 이용해 정보를 전달했습니다.
 
+
+![gallery](https://user-images.githubusercontent.com/63027385/87500771-54e76180-c698-11ea-8d0d-413dc63bd879.PNG)
+
+
+
 **2)구현코드**
 
 # RandomGame
