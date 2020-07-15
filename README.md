@@ -209,22 +209,26 @@ public void fillter(String searchText, ArrayList<JsonData> backupList){
 
 # Gallery 구현사항
 
-**1)기능**
+세번째 탭에는 Gallery 기능을 구현했습니다. 
+Gallery의 기능은 다음과 같습니다
+
 
 *  여러개의 이미지를 3개의 열로 표시
 *  클릭하면 이미지를 확대해서 보여주는 기능
 *  이미지 밑에 프리뷰 구현
 
-여러개의 이미지를 보여주는 Pictures는 GridView를 사용했으며, 각 이미지를 클릭하면 FullImageActivity로 이동해 확대된 사진이 보입니다.
+여러개의 이미지를 보여주는 PicturesFragment에는 GridView를 사용했으며, 각 이미지를 클릭하면 FullImageActivity로 이동해 확대된 사진이 보입니다.
 
 FUllImageActivity는 Viewpager과 RecyclerView로 이루어져 있고, Viewpager에는 확대된 이미지, RecyclerView에서는 Preview 이미지가 보입니다.
 
 Viewpager를 이용해 슬라이드 모션을 취하면 다음 이미지로 넘어가고, Preview Image에서 클릭하면 그에 해당하는 Image가 Viewpager에 나타나도록 구현했습니다.
 
-fragment간의 정보는 getAdapterPosition()을 이용해 주고 받았고, fragment에서 Activity로 넘어갈때는 Intent 함수를 이용해 정보를 전달했습니다.
+fragment간의 정보는 recyclerView.findViewHolderForAdapterPosition(position)을 이용해 주고 받았고, fragment에서 Activity로 넘어갈때는 Intent 함수를 이용해 정보를 전달했습니다.
 
 
 ![gallery](https://user-images.githubusercontent.com/63027385/87500771-54e76180-c698-11ea-8d0d-413dc63bd879.PNG)
+![gallery click](https://user-images.githubusercontent.com/63027385/87500824-7d6f5b80-c698-11ea-9bf2-63a5d03139a8.PNG)
+
 
 
 
