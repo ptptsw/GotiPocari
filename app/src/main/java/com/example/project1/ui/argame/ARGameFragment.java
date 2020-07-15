@@ -83,17 +83,6 @@ public class ARGameFragment extends Fragment {
             }
         });
 
-        arSceneView.getScene().setOnTouchListener(new Scene.OnTouchListener() {
-
-            @Override
-            public boolean onSceneTouch(HitTestResult hitTestResult, MotionEvent motionEvent) {
-                if (!bottlePlaced)
-                    return gestureDetector.onTouchEvent(motionEvent);
-
-                return false;
-            }
-        });
-
         PermissionUtils.requestCameraPermission(this.getActivity(), RC_PERMISSIONS);
 
         return root;
