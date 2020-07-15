@@ -10,4 +10,4 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd /Users/pacokwon/Downloads/models/soda/CHAHIN_BOTTLE_OF_SODA_TEXTURE.jpg
+map_Kd ./cola.jpg
